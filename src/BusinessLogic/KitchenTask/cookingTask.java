@@ -11,6 +11,8 @@ public class cookingTask {
     private int _priority;
     private int _difficulty;
 
+    private boolean completed = false;
+
     public cookingTask() {
     }
 
@@ -61,21 +63,23 @@ public class cookingTask {
     public cookingTask createCookingTask(ArrayList<Turn> turn,
                                          Recipe recipe,
                                          double estimatedTime,
-                                         int preparationQuantity,
-                                         int numberOfPortions,
-                                         int priority,
-                                         int difficulty) {
+                                         Integer preparationQuantity,
+                                         Integer numberOfPortions,
+                                         Integer priority,
+                                         Integer difficulty) {
 
-        this._turn = turn;
+        this._turn = turn; //Anche se null.
         this._recipe = recipe;
         this._estimatedTime = estimatedTime;
 
-        if (preparationQuantity < 1 || preparationQuantity > 5) this._preparationQuantity = -1;
+        if (preparationQuantity == null || preparationQuantity < 1) this._preparationQuantity = -1;
         else this._preparationQuantity = preparationQuantity;
-
-        this._numberOfPortions = numberOfPortions;
-        this._priority = priority;
-        this._difficulty = difficulty;
+        if (numberOfPortions == null || numberOfPortions < 1) this._numberOfPortions = -1;
+        else this._numberOfPortions = numberOfPortions;
+        if (priority == null || priority < 1 || priority > 5 )this._priority = -1;
+        else this._priority = priority;
+        if (difficulty == null || difficulty < 1 || difficulty > 5) this._difficulty = -1;
+        else this._difficulty = difficulty;
 
         return this;
     }

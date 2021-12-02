@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class summarySheet extends cookingTask {
 
+    private static final String DIFFICULTY = "Difficulty";
+    private static final String PRIORITY = "Priority";
     private ArrayList<cookingTask> _cookingTasks;
 
     public void addCookingTask(ArrayList<Turn> turn,
@@ -42,9 +44,9 @@ public class summarySheet extends cookingTask {
     }
 
     public void sortSummarySheet(String criteria) throws UseCaseLogicException {
-        if (criteria.equals(Criteria.DIFFICULTY)) {
+        if (criteria.equals(DIFFICULTY)) {
             _cookingTasks.sort((o1, o2) -> Integer.compare(o1.get_difficulty(), o2.get_difficulty()));
-        } else if (criteria.equals(Criteria.PRIORITY)) {
+        } else if (criteria.equals(PRIORITY)) {
             _cookingTasks.sort((o1, o2) -> Integer.compare(o1.get_priority(), o2.get_priority()));
         } else {
             throw new UseCaseLogicException();
