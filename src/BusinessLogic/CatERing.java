@@ -1,20 +1,20 @@
 package BusinessLogic;
 
-import BusinessLogic.KitchenTask.cookingTask;
-import BusinessLogic.KitchenTask.summarySheet;
+import BusinessLogic.KitchenTask.CookingTask;
+import BusinessLogic.KitchenTask.SummarySheet;
 
 import java.util.ArrayList;
 
 public class CatERing {
     public static void main(String[] args) {
 
-        summarySheet ss = new summarySheet();
+        SummarySheet ss = new SummarySheet();
 
         ss.addCookingTask(null, null, 2, 500, null, null, 15);
         ss.addCookingTask(null, null, 2, 500, null, null, 15);
         System.out.println("Prima: " + ss.toString());
 
-        ArrayList<cookingTask> a = ss.getSummarySheet();
+        ArrayList<CookingTask> a = ss.getSummarySheet();
         ss.markCookingTaskAsDone(a.get(0));
         System.out.println("\nDopo: " + ss.toString());
     }

@@ -3,13 +3,20 @@ package BusinessLogic.KitchenTask;
 import BusinessLogic.UseCaseLogicException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class kitchenTaskManager {
-    private summarySheet _summarySheet;
 
-    public kitchenTaskManager() {
-        _summarySheet = new summarySheet();
+public class KitchenTaskManager {
+    private SummarySheet _summarySheet;
+
+    public void addReceiver(KitchenTaskReceiver ktr){}
+    public void deleteReceiver(KitchenTaskReceiver ktr){}
+    private void notifyCookingTaskAdded(CookingTask cookingTask){}
+    private void notifyCookingTaskDeleted(CookingTask cookingTask){}
+    private void notifyCookingTaskUpdated(CookingTask cookingTask){}
+    private void notifyCookingTasksOrdered(SummarySheet cookingTask){}
+
+    public KitchenTaskManager() {
+        _summarySheet = new SummarySheet();
     }
 
     public void addCookingTask(ArrayList<Turn> turn,
@@ -23,10 +30,10 @@ public class kitchenTaskManager {
         _summarySheet.addCookingTask(turn, recipe, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
     }
 
-    public void deleteCookingTask(cookingTask cookingTask) {
+    public void deleteCookingTask(CookingTask cookingTask) {
     }
 
-    public void updateCookingTask(cookingTask cookingTask,
+    public void updateCookingTask(CookingTask cookingTask,
                                   ArrayList<Turn> turn,
                                   double estimatedTime,
                                   Integer preparationQuantity,
@@ -49,7 +56,7 @@ public class kitchenTaskManager {
         //stampa turni
     }
 
-    public void markCookingTaskAsDone(cookingTask cookingTask) {
+    public void markCookingTaskAsDone(CookingTask cookingTask) {
         _summarySheet.markCookingTaskAsDone(cookingTask);
     }
 

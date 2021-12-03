@@ -4,14 +4,14 @@ import BusinessLogic.UseCaseLogicException;
 
 import java.util.ArrayList;
 
-public class summarySheet extends cookingTask {
+public class SummarySheet extends CookingTask {
 
     private static final String DIFFICULTY = "Difficulty";
     private static final String PRIORITY = "Priority";
-    private ArrayList<cookingTask> _cookingTasks;
+    private ArrayList<CookingTask> _cookingTasks;
 
-    public summarySheet() {
-        this._cookingTasks = new ArrayList<cookingTask>();
+    public SummarySheet() {
+        this._cookingTasks = new ArrayList<CookingTask>();
     }
 
     public void addCookingTask(ArrayList<Turn> turn,
@@ -22,16 +22,16 @@ public class summarySheet extends cookingTask {
                                Integer priority,
                                Integer difficulty) {
 
-        cookingTask ct = new cookingTask();
+        CookingTask ct = new CookingTask();
         ct.createCookingTask(turn, recipe, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
         _cookingTasks.add(ct);
     }
 
-    public void deleteCookingTask(cookingTask cookingTask) {
+    public void deleteCookingTask(CookingTask cookingTask) {
         _cookingTasks.remove(cookingTask);
     }
 
-    public void updateCookingTask(cookingTask cookingTask,
+    public void updateCookingTask(CookingTask cookingTask,
                                   ArrayList<Turn> turn,
                                   double estimatedTime,
                                   Integer preparationQuantity,
@@ -59,12 +59,12 @@ public class summarySheet extends cookingTask {
         }
     }
 
-    public void markCookingTaskAsDone(cookingTask cookingTask){
+    public void markCookingTaskAsDone(CookingTask cookingTask){
         cookingTask.setCookingTaskDone();
         deleteCookingTask(cookingTask);
     }
 
-    public ArrayList<cookingTask> getSummarySheet(){
+    public ArrayList<CookingTask> getSummarySheet(){
         return this._cookingTasks;
     }
 

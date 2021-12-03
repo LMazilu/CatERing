@@ -2,7 +2,7 @@ package BusinessLogic.KitchenTask;
 
 import java.util.ArrayList;
 
-public class cookingTask {
+public class CookingTask {
     private ArrayList<Turn> _turn;
     private Recipe _recipe;
     private double _estimatedTime;
@@ -13,7 +13,7 @@ public class cookingTask {
 
     private boolean completed = false;
 
-    public cookingTask() {
+    public CookingTask() {
     }
 
 
@@ -61,7 +61,7 @@ public class cookingTask {
     }
     //endregion
 
-    public cookingTask createCookingTask(ArrayList<Turn> turn,
+    public CookingTask createCookingTask(ArrayList<Turn> turn,
                                          Recipe recipe,
                                          double estimatedTime,
                                          Integer preparationQuantity,

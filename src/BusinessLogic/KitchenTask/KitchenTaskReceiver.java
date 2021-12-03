@@ -1,5 +1,5 @@
 package BusinessLogic.KitchenTask;
 
-public interface kitchenTaskReceiver {
+public interface KitchenTaskReceiver {
 
 }
