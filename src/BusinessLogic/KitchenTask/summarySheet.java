@@ -10,14 +10,21 @@ public class summarySheet extends cookingTask {
     private static final String PRIORITY = "Priority";
     private ArrayList<cookingTask> _cookingTasks;
 
+    public summarySheet() {
+        this._cookingTasks = new ArrayList<cookingTask>();
+    }
+
     public void addCookingTask(ArrayList<Turn> turn,
                                Recipe recipe,
                                double estimatedTime,
-                               int preparationQuantity,
-                               int numberOfPortions,
-                               int priority,
-                               int difficulty) {
+                               Integer preparationQuantity,
+                               Integer numberOfPortions,
+                               Integer priority,
+                               Integer difficulty) {
 
+        cookingTask ct = new cookingTask();
+        ct.createCookingTask(turn, recipe, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
+        _cookingTasks.add(ct);
     }
 
     public void deleteCookingTask(cookingTask cookingTask) {
@@ -27,14 +34,13 @@ public class summarySheet extends cookingTask {
     public void updateCookingTask(cookingTask cookingTask,
                                   ArrayList<Turn> turn,
                                   double estimatedTime,
-                                  int preparationQuantity,
-                                  int numberOfPortions,
-                                  int priority,
-                                  int difficulty) {
+                                  Integer preparationQuantity,
+                                  Integer numberOfPortions,
+                                  Integer priority,
+                                  Integer difficulty) {
 
 
         cookingTask.set_estimatedTime(estimatedTime);
-        //cookingTask.set_recipe(recipe);
         //cookingTask.set_turn(turn);
         cookingTask.set_preparationQuantity(preparationQuantity);
         cookingTask.set_numberOfPortions(numberOfPortions);
@@ -53,5 +59,19 @@ public class summarySheet extends cookingTask {
         }
     }
 
+    public void markCookingTaskAsDone(cookingTask cookingTask){
+        cookingTask.setCookingTaskDone();
+        deleteCookingTask(cookingTask);
+    }
 
+    public ArrayList<cookingTask> getSummarySheet(){
+        return this._cookingTasks;
+    }
+
+    @Override
+    public String toString() {
+        return "summarySheet{" +
+                "_cookingTasks=" + _cookingTasks +
+                '}';
+    }
 }
