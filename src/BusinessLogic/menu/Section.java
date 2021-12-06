@@ -1,10 +1,10 @@
-package businesslogic.menu;
+package BusinessLogic.menu;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import persistence.BatchUpdateHandler;
-import persistence.PersistenceManager;
-import persistence.ResultHandler;
+import Persistence.BatchUpdateHandler;
+import Persistence.PersistenceManager;
+import Persistence.ResultHandler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

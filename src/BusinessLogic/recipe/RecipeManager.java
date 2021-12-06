@@ -1,4 +1,4 @@
-package businesslogic.recipe;
+package BusinessLogic.recipe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

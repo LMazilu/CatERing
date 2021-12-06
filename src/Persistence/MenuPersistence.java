@@ -1,4 +1,4 @@
-package persistence;
+package Persistence;
 
 import businesslogic.menu.Menu;
 import businesslogic.menu.MenuEventReceiver;

@@ -1,4 +1,7 @@
-package BusinessLogic.KitchenTask;
+package BusinessLogic.Turn;
 
 public class Turn {
+
+    public Turn() {
+    }
 }

@@ -1,4 +1,4 @@
-package businesslogic.event;
+package BusinessLogic.event;
 
 public interface EventItemInfo {
 }

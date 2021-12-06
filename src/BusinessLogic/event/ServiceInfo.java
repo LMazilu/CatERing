@@ -1,9 +1,9 @@
-package businesslogic.event;
+package BusinessLogic.event;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import persistence.PersistenceManager;
-import persistence.ResultHandler;
+import Persistence.PersistenceManager;
+import Persistence.ResultHandler;
 
 import java.sql.Date;
 import java.sql.ResultSet;

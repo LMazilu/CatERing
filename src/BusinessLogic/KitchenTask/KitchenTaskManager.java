@@ -1,19 +1,40 @@
 package BusinessLogic.KitchenTask;
 
+import BusinessLogic.Turn.Turn;
 import BusinessLogic.UseCaseLogicException;
+import BusinessLogic.recipe.Recipe;
 
 import java.util.ArrayList;
 
 
 public class KitchenTaskManager {
     private SummarySheet _summarySheet;
+    private ArrayList<KitchenTaskReceiver>  _kitchenTaskReceivers;
 
     public void addReceiver(KitchenTaskReceiver ktr){}
     public void deleteReceiver(KitchenTaskReceiver ktr){}
-    private void notifyCookingTaskAdded(CookingTask cookingTask){}
-    private void notifyCookingTaskDeleted(CookingTask cookingTask){}
-    private void notifyCookingTaskUpdated(CookingTask cookingTask){}
-    private void notifyCookingTasksOrdered(SummarySheet cookingTask){}
+
+    private void notifyCookingTaskAdded(CookingTask cookingTask){
+        for(KitchenTaskReceiver ktr : _kitchenTaskReceivers){
+            ktr.updateCookingTaskAdded(cookingTask);
+        }
+    }
+    private void notifyCookingTaskDeleted(CookingTask cookingTask){
+        for(KitchenTaskReceiver ktr : _kitchenTaskReceivers){
+            ktr.updateCookingTaskDeleted(cookingTask);
+        }
+    }
+    private void notifyCookingTaskUpdated(CookingTask cookingTask){
+        for(KitchenTaskReceiver ktr : _kitchenTaskReceivers){
+            ktr.updateCookingTaskUpdated(cookingTask);
+        }
+    }
+    private void notifyCookingTasksSorted(SummarySheet summarySheet){
+        for(KitchenTaskReceiver ktr : _kitchenTaskReceivers){
+            ktr.updateCookingTasksSorted(summarySheet);
+        }
+
+    }
 
     public KitchenTaskManager() {
         _summarySheet = new SummarySheet();

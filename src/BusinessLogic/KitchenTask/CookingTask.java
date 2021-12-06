@@ -1,5 +1,8 @@
 package BusinessLogic.KitchenTask;
 
+import BusinessLogic.Turn.Turn;
+import BusinessLogic.recipe.Recipe;
+
 import java.util.ArrayList;
 
 public class CookingTask {

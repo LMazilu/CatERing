@@ -1,11 +1,11 @@
-package businesslogic.user;
+package BusinessLogic.User;
 
 public class UserManager {
     private User currentUser;
 
-    public void fakeLogin() //TODO: bisogna implementare il login vero!
+    public void fakeLogin(String username) //TODO: bisogna implementare il login vero!
     {
-        this.currentUser = new User();
+        this.currentUser = User.loadUser(username);
     }
 
     public User getCurrentUser() {

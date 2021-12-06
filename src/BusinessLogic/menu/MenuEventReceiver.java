@@ -1,4 +1,4 @@
-package businesslogic.menu;
+package BusinessLogic.menu;
 
 public interface MenuEventReceiver {
     public void updateMenuCreated(Menu m);

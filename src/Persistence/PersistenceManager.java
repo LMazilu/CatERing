@@ -1,4 +1,4 @@
-package persistence;
+package Persistence;
 
 import com.sun.javafx.binding.StringFormatter;
 

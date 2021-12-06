@@ -1,4 +1,4 @@
-package businesslogic.event;
+package BusinessLogic.event;
 
 import javafx.collections.ObservableList;
 

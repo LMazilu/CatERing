@@ -1,9 +1,9 @@
-package businesslogic.recipe;
+package BusinessLogic.recipe;
 
+import Persistence.PersistenceManager;
+import Persistence.ResultHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import persistence.PersistenceManager;
-import persistence.ResultHandler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
