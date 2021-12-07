@@ -1,9 +1,9 @@
 package Persistence;
 
-import businesslogic.menu.Menu;
-import businesslogic.menu.MenuEventReceiver;
-import businesslogic.menu.MenuItem;
-import businesslogic.menu.Section;
+import BusinessLogic.menu.Menu;
+import BusinessLogic.menu.MenuEventReceiver;
+import BusinessLogic.menu.MenuItem;
+import BusinessLogic.menu.Section;
 
 public class MenuPersistence implements MenuEventReceiver {
 

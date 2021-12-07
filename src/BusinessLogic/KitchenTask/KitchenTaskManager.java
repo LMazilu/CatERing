@@ -8,11 +8,15 @@ import java.util.ArrayList;
 
 
 public class KitchenTaskManager {
-    private SummarySheet _summarySheet;
+    private SummarySheet _currentSummarySheet = new SummarySheet();
     private ArrayList<KitchenTaskReceiver>  _kitchenTaskReceivers;
 
-    public void addReceiver(KitchenTaskReceiver ktr){}
-    public void deleteReceiver(KitchenTaskReceiver ktr){}
+    public void addReceiver(KitchenTaskReceiver ktr){
+        this._kitchenTaskReceivers.add(ktr);
+    }
+    public void deleteReceiver(KitchenTaskReceiver ktr){
+        this._kitchenTaskReceivers.remove(ktr);
+    }
 
     private void notifyCookingTaskAdded(CookingTask cookingTask){
         for(KitchenTaskReceiver ktr : _kitchenTaskReceivers){
@@ -37,7 +41,7 @@ public class KitchenTaskManager {
     }
 
     public KitchenTaskManager() {
-        _summarySheet = new SummarySheet();
+        _kitchenTaskReceivers = new ArrayList<KitchenTaskReceiver>();
     }
 
     public void addCookingTask(ArrayList<Turn> turn,
@@ -48,7 +52,7 @@ public class KitchenTaskManager {
                                Integer priority,
                                Integer difficulty) {
 
-        _summarySheet.addCookingTask(turn, recipe, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
+        _currentSummarySheet.addCookingTask(turn, recipe, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
     }
 
     public void deleteCookingTask(CookingTask cookingTask) {
@@ -61,24 +65,23 @@ public class KitchenTaskManager {
                                   Integer numberOfPortions,
                                   Integer priority,
                                   Integer difficulty) {
-        _summarySheet.updateCookingTask(cookingTask, turn, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
+        _currentSummarySheet.updateCookingTask(cookingTask, turn, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
     }
 
     public void sortSummarySheet(String criteria) throws UseCaseLogicException {
-        _summarySheet.sortSummarySheet(criteria);
+        _currentSummarySheet.sortSummarySheet(criteria);
     }
 
     public void openSummarySheet() {
-        //togli evento da dcd
-        System.out.println(_summarySheet.getSummarySheet());
+        System.out.println(_currentSummarySheet.getSummarySheet());
     }
 
     public void checkShiftsBoard() {
-        //stampa turni
+
     }
 
     public void markCookingTaskAsDone(CookingTask cookingTask) {
-        _summarySheet.markCookingTaskAsDone(cookingTask);
+        _currentSummarySheet.markCookingTaskAsDone(cookingTask);
     }
 
 }
