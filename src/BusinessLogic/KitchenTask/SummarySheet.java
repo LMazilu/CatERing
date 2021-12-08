@@ -3,6 +3,7 @@ package BusinessLogic.KitchenTask;
 import BusinessLogic.Shift.Shift;
 import BusinessLogic.UseCaseLogicException;
 import BusinessLogic.recipe.Recipe;
+import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;

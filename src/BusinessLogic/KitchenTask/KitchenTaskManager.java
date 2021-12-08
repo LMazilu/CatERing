@@ -71,8 +71,8 @@ public class KitchenTaskManager {
         _currentSummarySheet.sortSummarySheet(criteria);
     }
 
-    public ObservableList<CookingTask> openSummarySheet() {
-        return _currentSummarySheet.getSummarySheet();
+    public SummarySheet openSummarySheet() {
+        return _currentSummarySheet;
     }
 
 
