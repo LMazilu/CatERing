@@ -1,3 +1,5 @@
+package MenuTests;
+
 import BusinessLogic.CatERing;
 import BusinessLogic.UseCaseLogicException;
 import BusinessLogic.menu.Menu;
@@ -5,7 +7,7 @@ import BusinessLogic.menu.Section;
 import BusinessLogic.recipe.Recipe;
 import javafx.collections.ObservableList;
 
-public class TestCatERing2b {
+public class TestCatERing2d {
     public static void main(String[] args) {
         try {
             /* System.out.println("TEST DATABASE CONNECTION");
@@ -16,7 +18,6 @@ public class TestCatERing2b {
             Section antipasti = CatERing.getInstance().getMenuManager().defineSection("Antipasti");
             Section primi = CatERing.getInstance().getMenuManager().defineSection("Primi");
             Section secondi = CatERing.getInstance().getMenuManager().defineSection("Secondi");
-
             ObservableList<Recipe> recipes = CatERing.getInstance().getRecipeManager().getRecipes();
             CatERing.getInstance().getMenuManager().insertItem(recipes.get(0), antipasti);
             CatERing.getInstance().getMenuManager().insertItem(recipes.get(1), antipasti);
@@ -25,10 +26,12 @@ public class TestCatERing2b {
             CatERing.getInstance().getMenuManager().insertItem(recipes.get(7), secondi);
             CatERing.getInstance().getMenuManager().insertItem(recipes.get(3));
             CatERing.getInstance().getMenuManager().insertItem(recipes.get(4));
+
             System.out.println(m.testString());
 
-            System.out.println("\nTEST DELETE SECTION BUT KEEP ITEMS");
-            CatERing.getInstance().getMenuManager().deleteSection(antipasti, false);
+            System.out.println("\nTEST MOVE SECTION");
+            CatERing.getInstance().getMenuManager().moveSection(antipasti, 1);
+            CatERing.getInstance().getMenuManager().moveSection(secondi, 0);
             System.out.println(m.testString());
 
         } catch (UseCaseLogicException ex) {

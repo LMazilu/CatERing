@@ -1,3 +1,5 @@
+package MenuTests;
+
 import BusinessLogic.CatERing;
 import BusinessLogic.UseCaseLogicException;
 import BusinessLogic.menu.Menu;
@@ -6,7 +8,7 @@ import BusinessLogic.menu.Section;
 import BusinessLogic.recipe.Recipe;
 import javafx.collections.ObservableList;
 
-public class TestCatERing2ef {
+public class TestCatERing4a {
     public static void main(String[] args) {
         try {
             /* System.out.println("TEST DATABASE CONNECTION");
@@ -22,15 +24,17 @@ public class TestCatERing2ef {
             MenuItem it1 = CatERing.getInstance().getMenuManager().insertItem(recipes.get(0), antipasti);
             CatERing.getInstance().getMenuManager().insertItem(recipes.get(1), antipasti);
             CatERing.getInstance().getMenuManager().insertItem(recipes.get(2), antipasti);
-            CatERing.getInstance().getMenuManager().insertItem(recipes.get(6), secondi);
-            CatERing.getInstance().getMenuManager().insertItem(recipes.get(7), secondi);
+            MenuItem it2 = CatERing.getInstance().getMenuManager().insertItem(recipes.get(6), secondi);
+            MenuItem it3 = CatERing.getInstance().getMenuManager().insertItem(recipes.get(7), secondi);
             CatERing.getInstance().getMenuManager().insertItem(recipes.get(3));
             MenuItem freeit = CatERing.getInstance().getMenuManager().insertItem(recipes.get(4));
             System.out.println(m.testString());
 
-            System.out.println("\nTEST MOVE ITEM");
-            CatERing.getInstance().getMenuManager().moveMenuItem(it1, antipasti,2);
-            CatERing.getInstance().getMenuManager().moveMenuItem(freeit, 0);
+            System.out.println("\nTEST CHANGE ITEM SECTION");
+            CatERing.getInstance().getMenuManager().assignItemToSection(it1, secondi);
+            CatERing.getInstance().getMenuManager().assignItemToSection(it2, primi);
+            CatERing.getInstance().getMenuManager().assignItemToSection(it3);
+            CatERing.getInstance().getMenuManager().assignItemToSection(freeit, antipasti);
             System.out.println(m.testString());
 
         } catch (UseCaseLogicException ex) {

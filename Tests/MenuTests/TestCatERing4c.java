@@ -1,3 +1,5 @@
+package MenuTests;
+
 import BusinessLogic.CatERing;
 import BusinessLogic.UseCaseLogicException;
 import BusinessLogic.menu.Menu;

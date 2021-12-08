@@ -1,15 +1,16 @@
 package BusinessLogic.KitchenTask;
 
-import BusinessLogic.Turn.Turn;
+import BusinessLogic.Shift.Shift;
 import BusinessLogic.UseCaseLogicException;
 import BusinessLogic.recipe.Recipe;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
 
 public class KitchenTaskManager {
     private SummarySheet _currentSummarySheet = new SummarySheet();
-    private ArrayList<KitchenTaskReceiver>  _kitchenTaskReceivers;
+    private ObservableList<KitchenTaskReceiver>  _kitchenTaskReceivers;
 
     public void addReceiver(KitchenTaskReceiver ktr){
         this._kitchenTaskReceivers.add(ktr);
@@ -40,11 +41,9 @@ public class KitchenTaskManager {
 
     }
 
-    public KitchenTaskManager() {
-        _kitchenTaskReceivers = new ArrayList<KitchenTaskReceiver>();
-    }
+    public KitchenTaskManager() {}
 
-    public void addCookingTask(ArrayList<Turn> turn,
+    public void addCookingTask(ObservableList<Shift> shift,
                                Recipe recipe,
                                double estimatedTime,
                                Integer preparationQuantity,
@@ -52,20 +51,20 @@ public class KitchenTaskManager {
                                Integer priority,
                                Integer difficulty) {
 
-        _currentSummarySheet.addCookingTask(turn, recipe, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
+        _currentSummarySheet.addCookingTask(shift, recipe, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
     }
 
     public void deleteCookingTask(CookingTask cookingTask) {
     }
 
     public void updateCookingTask(CookingTask cookingTask,
-                                  ArrayList<Turn> turn,
+                                  ObservableList<Shift> shift,
                                   double estimatedTime,
                                   Integer preparationQuantity,
                                   Integer numberOfPortions,
                                   Integer priority,
                                   Integer difficulty) {
-        _currentSummarySheet.updateCookingTask(cookingTask, turn, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
+        _currentSummarySheet.updateCookingTask(cookingTask, shift, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
     }
 
     public void sortSummarySheet(String criteria) throws UseCaseLogicException {
@@ -76,9 +75,6 @@ public class KitchenTaskManager {
         System.out.println(_currentSummarySheet.getSummarySheet());
     }
 
-    public void checkShiftsBoard() {
-
-    }
 
     public void markCookingTaskAsDone(CookingTask cookingTask) {
         _currentSummarySheet.markCookingTaskAsDone(cookingTask);

@@ -1,12 +1,13 @@
 package BusinessLogic.KitchenTask;
 
-import BusinessLogic.Turn.Turn;
+import BusinessLogic.Shift.Shift;
 import BusinessLogic.recipe.Recipe;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
 public class CookingTask {
-    private ArrayList<Turn> _turn;
+    private ObservableList<Shift> _shift;
     private Recipe _recipe;
     private double _estimatedTime;
     private int _preparationQuantity;
@@ -64,7 +65,7 @@ public class CookingTask {
     }
     //endregion
 
-    public CookingTask createCookingTask(ArrayList<Turn> turn,
+    public CookingTask createCookingTask(ObservableList<Shift> shift,
                                          Recipe recipe,
                                          double estimatedTime,
                                          Integer preparationQuantity,
@@ -72,7 +73,7 @@ public class CookingTask {
                                          Integer priority,
                                          Integer difficulty) {
 
-        this._turn = turn; //Anche se null.
+        this._shift = shift; //Anche se null.
         this._recipe = recipe;
         this._estimatedTime = estimatedTime;
 
@@ -95,7 +96,7 @@ public class CookingTask {
     @Override
     public String toString() {
         return "cookingTask{" +
-                "  turn=" + _turn +
+                "  turn=" + _shift +
                 ", recipe=" + _recipe +
                 ", estimatedTime=" + _estimatedTime +
                 ", preparationQuantity=" + _preparationQuantity +

@@ -1,8 +1,9 @@
 package BusinessLogic.KitchenTask;
 
-import BusinessLogic.Turn.Turn;
+import BusinessLogic.Shift.Shift;
 import BusinessLogic.UseCaseLogicException;
 import BusinessLogic.recipe.Recipe;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
@@ -10,13 +11,12 @@ public class SummarySheet extends CookingTask {
 
     private static final String DIFFICULTY = "Difficulty";
     private static final String PRIORITY = "Priority";
-    private ArrayList<CookingTask> _cookingTasks;
+    private ObservableList<CookingTask> _cookingTasks;
 
     public SummarySheet() {
-        this._cookingTasks = new ArrayList<CookingTask>();
     }
 
-    public void addCookingTask(ArrayList<Turn> turn,
+    public void addCookingTask(ObservableList<Shift> shift,
                                Recipe recipe,
                                double estimatedTime,
                                Integer preparationQuantity,
@@ -25,7 +25,7 @@ public class SummarySheet extends CookingTask {
                                Integer difficulty) {
 
         CookingTask ct = new CookingTask();
-        ct.createCookingTask(turn, recipe, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
+        ct.createCookingTask(shift, recipe, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
         _cookingTasks.add(ct);
     }
 
@@ -34,7 +34,7 @@ public class SummarySheet extends CookingTask {
     }
 
     public void updateCookingTask(CookingTask cookingTask,
-                                  ArrayList<Turn> turn,
+                                  ObservableList<Shift> shift,
                                   double estimatedTime,
                                   Integer preparationQuantity,
                                   Integer numberOfPortions,
@@ -66,7 +66,7 @@ public class SummarySheet extends CookingTask {
         deleteCookingTask(cookingTask);
     }
 
-    public ArrayList<CookingTask> getSummarySheet(){
+    public ObservableList<CookingTask> getSummarySheet(){
         return this._cookingTasks;
     }
 
