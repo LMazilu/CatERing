@@ -13,9 +13,6 @@ public class SummarySheet extends CookingTask {
     private static final String PRIORITY = "Priority";
     private ObservableList<CookingTask> _cookingTasks;
 
-    public SummarySheet() {
-    }
-
     public void addCookingTask(ObservableList<Shift> shift,
                                Recipe recipe,
                                double estimatedTime,

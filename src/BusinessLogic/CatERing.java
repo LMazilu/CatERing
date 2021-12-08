@@ -1,14 +1,15 @@
 package BusinessLogic;
 
 import BusinessLogic.KitchenTask.CookingTask;
+import BusinessLogic.KitchenTask.KitchenTaskManager;
 import BusinessLogic.KitchenTask.SummarySheet;
+import BusinessLogic.Shift.ShiftsManager;
 import BusinessLogic.User.UserManager;
 import BusinessLogic.event.EventManager;
 import BusinessLogic.menu.*;
 import BusinessLogic.recipe.*;
 import Persistence.*;
-
-import java.util.ArrayList;
+import javafx.collections.ObservableList;
 
 public class CatERing {
     private static CatERing singleInstance;
@@ -20,36 +21,56 @@ public class CatERing {
         return singleInstance;
     }
 
-    private MenuManager menuMgr;
-    private RecipeManager recipeMgr;
-    private UserManager userMgr;
-    private EventManager eventMgr;
+    private MenuManager menuManager;
+    private RecipeManager recipeManager;
+    private UserManager userManager;
+    private EventManager eventManager;
+    private ShiftsManager shiftsManager;
+
+    public ShiftsManager getShiftsManager() {
+        return shiftsManager;
+    }
+
+    public void setShiftsManager(ShiftsManager shiftsManager) {
+        this.shiftsManager = shiftsManager;
+    }
+
+    public KitchenTaskManager getKitchenTaskManager() {
+        return ktm;
+    }
+
+    public void setKitchenTaskManager(KitchenTaskManager ktm) {
+        this.ktm = ktm;
+    }
+
+    private KitchenTaskManager ktm;
 
     private MenuPersistence menuPersistence;
 
     private CatERing() {
-        menuMgr = new MenuManager();
-        recipeMgr = new RecipeManager();
-        userMgr = new UserManager();
-        eventMgr = new EventManager();
+        menuManager = new MenuManager();
+        recipeManager = new RecipeManager();
+        userManager = new UserManager();
+        eventManager = new EventManager();
         menuPersistence = new MenuPersistence();
-        menuMgr.addEventReceiver(menuPersistence);
+        menuManager.addEventReceiver(menuPersistence);
+        ktm = new KitchenTaskManager();
     }
 
 
     public MenuManager getMenuManager() {
-        return menuMgr;
+        return menuManager;
     }
 
     public RecipeManager getRecipeManager() {
-        return recipeMgr;
+        return recipeManager;
     }
 
     public UserManager getUserManager() {
-        return userMgr;
+        return userManager;
     }
 
-    public EventManager getEventManager() { return eventMgr; }
+    public EventManager getEventManager() { return eventManager; }
 
     public static void main(String[] args) {
 
@@ -60,7 +81,7 @@ public class CatERing {
         ss.addCookingTask(null, null, 2, 500, null, null, 15);
         System.out.println("Prima: " + ss.toString());
 
-        ArrayList<CookingTask> a = ss.getSummarySheet();
+        ObservableList<CookingTask> a = ss.getSummarySheet();
         ss.markCookingTaskAsDone(a.get(0));
         System.out.println("\nDopo: " + ss.toString());
         System.out.println("Ciao");

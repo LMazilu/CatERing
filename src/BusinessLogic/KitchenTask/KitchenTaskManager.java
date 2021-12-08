@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class KitchenTaskManager {
     private SummarySheet _currentSummarySheet = new SummarySheet();
-    private ObservableList<KitchenTaskReceiver>  _kitchenTaskReceivers;
+    private ArrayList<KitchenTaskReceiver>  _kitchenTaskReceivers;
 
     public void addReceiver(KitchenTaskReceiver ktr){
         this._kitchenTaskReceivers.add(ktr);
@@ -71,8 +71,8 @@ public class KitchenTaskManager {
         _currentSummarySheet.sortSummarySheet(criteria);
     }
 
-    public void openSummarySheet() {
-        System.out.println(_currentSummarySheet.getSummarySheet());
+    public ObservableList<CookingTask> openSummarySheet() {
+        return _currentSummarySheet.getSummarySheet();
     }
 
 
