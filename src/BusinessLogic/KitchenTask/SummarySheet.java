@@ -4,11 +4,12 @@ import BusinessLogic.Shift.Shift;
 import BusinessLogic.UseCaseLogicException;
 import BusinessLogic.recipe.Recipe;
 import javafx.beans.Observable;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
-public class SummarySheet extends CookingTask {
+public class SummarySheet{
 
     private static final String DIFFICULTY = "Difficulty";
     private static final String PRIORITY = "Priority";
@@ -25,6 +26,10 @@ public class SummarySheet extends CookingTask {
         CookingTask ct = new CookingTask();
         ct.createCookingTask(shift, recipe, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
         _cookingTasks.add(ct);
+    }
+
+    public SummarySheet() {
+        this._cookingTasks = FXCollections.observableArrayList();
     }
 
     public void deleteCookingTask(CookingTask cookingTask) {

@@ -10,6 +10,7 @@ import BusinessLogic.menu.Section;
 import BusinessLogic.recipe.Recipe;
 import BusinessLogic.Shift.Shift;
 import BusinessLogic.User.User;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
@@ -28,38 +29,41 @@ public class TestKitchen {
             System.out.println(menuList.get(0).testString());
 
             System.out.println("\n Test for open current summarySheet");
-            System.out.println(CatERing.getInstance().getKitchenTaskManager().openSummarySheet().getSummarySheet());
+            SummarySheet sheet = new SummarySheet();
+            System.out.println(sheet.getSummarySheet());
 
             System.out.println("\n Test for create cooking task");
             ObservableList<Recipe> recipeList = CatERing.getInstance().getRecipeManager().getRecipes();
-            CatERing.getInstance().getKitchenTaskManager().addCookingTask(null, recipeList.get(1), 2, null, null, null, null);
-            CatERing.getInstance().getKitchenTaskManager().addCookingTask(null, (Recipe) recipeList.get(4), 1, null, null, null, null);
-            ObservableList<Shift> turnList = CatERing.getInstance().getShiftsManager().getShifts();
-            ObservableList<Shift> selectedShift = null;
-            assert false;
-            selectedShift.add(turnList.get(4));
-            selectedShift.add(turnList.get(5));
-            CatERing.getInstance().getKitchenTaskManager().addCookingTask(selectedShift, recipeList.get(4),2, null, null, null, null);
-            CatERing.getInstance().getKitchenTaskManager().addCookingTask(selectedShift, recipeList.get(4), 3.0, null, null, null, null);
+            ObservableList<Shift> shifts = CatERing.getInstance().getShiftsManager().getShifts();
+            ObservableList<Shift> selectedShift = FXCollections.observableArrayList();
+            selectedShift.add(shifts.get(4));
+            selectedShift.add(shifts.get(5));
+            sheet.addCookingTask(selectedShift, recipeList.get(4),2.0, 1, 1, 1, 1);
+            sheet.addCookingTask(selectedShift, recipeList.get(2), 3.0, null, null, null, null);
+            sheet.addCookingTask(selectedShift, recipeList.get(3), 4.0, null, null, null, null);
+            sheet.addCookingTask(selectedShift, recipeList.get(4), 1.0, null, null, null, null);
 
-            System.out.println("\n Specify quantity, portions, difficulty and importance ");
-            ObservableList<CookingTask> cookingTaskList = CatERing.getInstance().getKitchenTaskManager().openSummarySheet().getSummarySheet();
-            CatERing.getInstance().getKitchenTaskManager().updateCookingTask(cookingTaskList.get(5),null, 2,3,5,1,2);
-            CatERing.getInstance().getKitchenTaskManager().updateCookingTask(cookingTaskList.get(2),null, 3,2,4,2,1);
-            CatERing.getInstance().getKitchenTaskManager().updateCookingTask(cookingTaskList.get(3),null, 4,1,3,4,5);
+            System.out.println(sheet.getSummarySheet());
+
+            System.out.println("\n Specify quantity, portions, difficulty and priority ");
+            ObservableList<CookingTask> cookingTaskList = sheet.getSummarySheet();
+            sheet.updateCookingTask(cookingTaskList.get(1),null, 2,3,5,1,2);
+            sheet.updateCookingTask(cookingTaskList.get(2),null, 3,2,4,2,1);
+            sheet.updateCookingTask(cookingTaskList.get(3),null, 4,1,3,4,5);
 
             System.out.println("\n Test for order summarySheet by Difficulty");
-            SummarySheet cTaskList = CatERing.getInstance().getKitchenTaskManager().openSummarySheet();
-            CatERing.getInstance().getKitchenTaskManager().sortSummarySheet("DIFFICULTY");
+            sheet.sortSummarySheet("Difficulty");
 
-            System.out.println("\n Test for order summarySheet by Importance");
-            CatERing.getInstance().getKitchenTaskManager().sortSummarySheet("PRIORITY");
+            System.out.println("\n Test for order summarySheet by Priority");
+            sheet.sortSummarySheet("Priority");
 
             System.out.println("\n Test for check cooking task completed");
-            CatERing.getInstance().getKitchenTaskManager().markCookingTaskAsDone(cookingTaskList.get(5));
+            sheet.markCookingTaskAsDone(cookingTaskList.get(2));
 
             System.out.println("\n Test for delete cooking task");
-            CatERing.getInstance().getKitchenTaskManager().deleteCookingTask(cookingTaskList.get(5));
+            sheet.deleteCookingTask(cookingTaskList.get(2));
+
+            System.out.println(sheet.toString());
 
         } catch (UseCaseLogicException e) {
             e.printStackTrace();

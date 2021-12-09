@@ -36,7 +36,7 @@ public class KitchenTaskManager {
     }
     private void notifyCookingTasksSorted(SummarySheet summarySheet){
         for(KitchenTaskReceiver ktr : _kitchenTaskReceivers){
-            ktr.updateCookingTasksSorted(summarySheet);
+            ktr.updateSummarySheetSorted(summarySheet);
         }
 
     }

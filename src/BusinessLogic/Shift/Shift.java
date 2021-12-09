@@ -20,7 +20,7 @@ public class Shift {
 
     public Shift() {}
 
-    public Shift(Double duration, Time begin) {
+    public Shift(Time begin, Double duration) {
         this.begin = begin;
         this.duration = duration;
     }

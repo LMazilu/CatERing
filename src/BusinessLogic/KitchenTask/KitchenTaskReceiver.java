@@ -8,6 +8,6 @@ public interface KitchenTaskReceiver {
 
     public void updateCookingTaskUpdated(CookingTask cookingTask);
 
-    public void updateCookingTasksSorted(SummarySheet summarySheet);
+    public void updateSummarySheetSorted(SummarySheet summarySheet);
 
 }

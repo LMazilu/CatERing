@@ -17,17 +17,17 @@ public class ShiftsBoard {
     private static Map<Integer, Shift> all = new HashMap<>();
 
     public static ObservableList<Shift> loadAllShifts() {
-        String query = "SELECT * FROM Shift";
+        String query = "SELECT * FROM shift";
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
                 int id = rs.getInt("id");
                 if (all.containsKey(id)) {
                     Shift sh = all.get(id);
-                    sh.setDuration(rs.getDouble("duration"));
                     sh.setBegin(rs.getTime("begin"));
+                    sh.setDuration(rs.getDouble("duration"));
                 } else {
-                    Shift sh = new Shift(rs.getDouble("duration"), rs.getTime("begin"));
+                    Shift sh = new Shift(rs.getTime("begin"), rs.getDouble("duration"));
                     sh.setId(id);
                     all.put(sh.getId(), sh);
                 }
@@ -47,12 +47,12 @@ public class ShiftsBoard {
         if (all.containsKey(id)) return all.get(id);
         Shift sh = new Shift();
 
-        String query = "SELECT * FROM Shift WHERE id = " + id;
+        String query = "SELECT * FROM shift WHERE id = " + id;
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
-                sh.setDuration(rs.getDouble("duration"));
                 sh.setBegin(rs.getTime("begin"));
+                sh.setDuration(rs.getDouble("duration"));
                 sh.setId(id);
                 all.put(sh.getId(), sh);
             }

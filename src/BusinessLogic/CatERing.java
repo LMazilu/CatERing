@@ -26,24 +26,19 @@ public class CatERing {
     private UserManager userManager;
     private EventManager eventManager;
     private ShiftsManager shiftsManager;
+    private KitchenTaskManager kitchenTaskManager;
 
-    public ShiftsManager getShiftsManager() {
-        return shiftsManager;
-    }
+    public ShiftsManager getShiftsManager() { return shiftsManager; }
 
     public void setShiftsManager(ShiftsManager shiftsManager) {
         this.shiftsManager = shiftsManager;
     }
 
     public KitchenTaskManager getKitchenTaskManager() {
-        return ktm;
+        return kitchenTaskManager;
     }
 
-    public void setKitchenTaskManager(KitchenTaskManager ktm) {
-        this.ktm = ktm;
-    }
-
-    private KitchenTaskManager ktm;
+    public void setKitchenTaskManager(KitchenTaskManager kitchenTaskManager) { this.kitchenTaskManager = kitchenTaskManager;  }
 
     private MenuPersistence menuPersistence;
 
@@ -54,7 +49,8 @@ public class CatERing {
         eventManager = new EventManager();
         menuPersistence = new MenuPersistence();
         menuManager.addEventReceiver(menuPersistence);
-        ktm = new KitchenTaskManager();
+        kitchenTaskManager = new KitchenTaskManager();
+        shiftsManager = new ShiftsManager();
     }
 
 
@@ -71,7 +67,7 @@ public class CatERing {
     }
 
     public EventManager getEventManager() { return eventManager; }
-
+/*
     public static void main(String[] args) {
 
 
@@ -86,4 +82,5 @@ public class CatERing {
         System.out.println("\nDopo: " + ss.toString());
         System.out.println("Ciao");
     }
+    */
 }
