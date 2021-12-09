@@ -7,7 +7,10 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Recipe {
     private static Map<Integer, Recipe> all = new HashMap<>();
@@ -23,20 +26,6 @@ public class Recipe {
         id = 0;
         this.name = name;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String toString() {
-        return name;
-    }
-
-    // STATIC METHODS FOR PERSISTENCE
 
     public static ObservableList<Recipe> loadAllRecipes() {
         String query = "SELECT * FROM Recipes";
@@ -54,7 +43,7 @@ public class Recipe {
                 }
             }
         });
-        ObservableList<Recipe> ret =  FXCollections.observableArrayList(all.values());
+        ObservableList<Recipe> ret = FXCollections.observableArrayList(all.values());
         Collections.sort(ret, new Comparator<Recipe>() {
             @Override
             public int compare(Recipe o1, Recipe o2) {
@@ -75,12 +64,26 @@ public class Recipe {
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
-                    rec.name = rs.getString("name");
-                    rec.id = id;
-                    all.put(rec.id, rec);
+                rec.name = rs.getString("name");
+                rec.id = id;
+                all.put(rec.id, rec);
             }
         });
         return rec;
+    }
+
+    // STATIC METHODS FOR PERSISTENCE
+
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String toString() {
+        return name;
     }
 
 

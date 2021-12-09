@@ -1,14 +1,14 @@
 package BusinessLogic.menu;
 
 import BusinessLogic.CatERing;
-import BusinessLogic.recipe.Recipe;
 import BusinessLogic.User.User;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
+import BusinessLogic.recipe.Recipe;
 import Persistence.BatchUpdateHandler;
 import Persistence.PersistenceManager;
 import Persistence.ResultHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -61,17 +61,17 @@ public class Menu {
         this.inUse = false;
         this.owner = owner;
         this.featuresMap = FXCollections.observableHashMap();
-        for (String feat: m.featuresMap.keySet()) {
+        for (String feat : m.featuresMap.keySet()) {
             this.featuresMap.put(feat, m.featuresMap.get(feat));
         }
 
         this.sections = FXCollections.observableArrayList();
-        for (Section original: m.sections) {
+        for (Section original : m.sections) {
             this.sections.add(new Section(original));
         }
 
         this.freeItems = FXCollections.observableArrayList();
-        for (MenuItem original: m.freeItems) {
+        for (MenuItem original : m.freeItems) {
             this.freeItems.add(new MenuItem(original));
         }
 
@@ -80,226 +80,6 @@ public class Menu {
     public static void savefreeItemDeleted(Menu m, MenuItem mi) {
 
     }
-
-    public boolean getFeatureValue(String feature) {
-        return this.featuresMap.get(feature);
-    }
-
-    public void setFeatureValue(String feature, boolean val) {
-        if (this.featuresMap.containsKey(feature)) {
-            this.featuresMap.put(feature, val);
-        }
-    }
-
-    public String testString() {
-        String result = this.toString() + "\n";
-        for (String f : featuresMap.keySet()) {
-            result += f + ": " + featuresMap.get(f) + "\n";
-        }
-
-        result += "\n";
-        for (Section sec : sections) {
-            result += sec.testString();
-            result += "\n";
-        }
-
-        if (freeItems.size() > 0) {
-            result += "\n" + "VOCI LIBERE:\n";
-        }
-        for (MenuItem mi : freeItems) {
-            result += "\t" + mi.toString() + "\n";
-        }
-
-        return result;
-    }
-
-    public String toString() {
-        return title + " (autore: " + owner.getUserName() + ")," + (published ? " " : " non ") +
-                "pubblicato," + (inUse ? " " : " non ") + "in uso";
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public void addFakeSections() {
-        this.sections.add(new Section("Antipasti"));
-        this.sections.add(new Section("Primi"));
-        this.sections.add(new Section("Secondi"));
-        this.sections.add(new Section("Dessert"));
-
-        Recipe[] all = CatERing.getInstance().getRecipeManager().getRecipes().toArray(new Recipe[0]);
-        freeItems.add(new MenuItem(all[3]));
-        freeItems.add(new MenuItem(all[4]));
-        freeItems.add(new MenuItem(all[5]));
-    }
-
-
-    public Section addSection(String name) {
-        Section sec = new Section(name);
-        this.sections.add(sec);
-        return sec;
-    }
-
-    public MenuItem addItem(Recipe recipe, Section sec, String desc) {
-        MenuItem mi = new MenuItem(recipe, desc);
-        if (sec != null) {
-            sec.addItem(mi);
-        } else {
-            this.freeItems.add(mi);
-        }
-        return mi;
-    }
-
-    public int getSectionPosition(Section sec) {
-        return this.sections.indexOf(sec);
-    }
-
-    public ObservableList<Section> getSections() {
-        return FXCollections.unmodifiableObservableList(this.sections);
-    }
-
-    public Section getSectionForItem(MenuItem mi) {
-        for (Section sec : sections) {
-            if (sec.getItemPosition(mi) >= 0)
-                return sec;
-        }
-        if (freeItems.indexOf(mi) >= 0) return null;
-        throw new IllegalArgumentException();
-    }
-
-    public int getFreeItemPosition(MenuItem mi) {
-        return freeItems.indexOf(mi);
-    }
-
-    public ObservableList<MenuItem> getFreeItems() {
-        return FXCollections.unmodifiableObservableList(this.freeItems);
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-
-    public void setPublished(boolean b) {
-        published = b;
-    }
-
-
-    public boolean isInUse() {
-        return this.inUse;
-    }
-
-    public boolean isOwner(User u) {
-        return u.getId() == this.owner.getId();
-    }
-
-    public ObservableMap<String, Boolean> getFeatures() {
-        return FXCollections.unmodifiableObservableMap(this.featuresMap);
-    }
-
-    public void updateFreeItems(ObservableList<MenuItem> newItems) {
-        ObservableList<MenuItem> updatedList = FXCollections.observableArrayList();
-        for (int i = 0; i < newItems.size(); i++) {
-            MenuItem mi = newItems.get(i);
-            MenuItem prev = this.findItemById(mi.getId());
-            if (prev == null) {
-                updatedList.add(mi);
-            } else {
-                prev.setDescription(mi.getDescription());
-                prev.setItemRecipe(mi.getItemRecipe());
-                updatedList.add(prev);
-            }
-        }
-        this.freeItems.clear();
-        this.freeItems.addAll(updatedList);
-    }
-
-    private MenuItem findItemById(int id) {
-        for (MenuItem mi : freeItems) {
-            if (mi.getId() == id) return mi;
-        }
-        return null;
-    }
-
-    private void updateSections(ObservableList<Section> newSections) {
-        ObservableList<Section> updatedList = FXCollections.observableArrayList();
-        for (int i = 0; i < newSections.size(); i++) {
-            Section sec = newSections.get(i);
-            Section prev = this.findSectionById(sec.getId());
-            if (prev == null) {
-                updatedList.add(sec);
-            } else {
-                prev.setName(sec.getName());
-                prev.updateItems(sec.getItems());
-                updatedList.add(prev);
-            }
-        }
-        this.sections.clear();
-        this.sections.addAll(updatedList);
-    }
-
-    private Section findSectionById(int id) {
-        for (Section s : sections) {
-            if (s.getId() == id) return s;
-        }
-        return null;
-    }
-
-
-    public void removeSection(Section s, boolean deleteItems) {
-        if (!deleteItems) {
-            this.freeItems.addAll(s.getItems());
-        }
-        this.sections.remove(s);
-    }
-
-    public int getSectionCount() {
-        return sections.size();
-    }
-
-    public int getFreeItemCount() {
-        return freeItems.size();
-    }
-
-
-    public void moveSection(Section sec, int position) {
-        sections.remove(sec);
-        sections.add(position, sec);
-    }
-
-
-    public void changeItemSection(MenuItem mi, Section oldsec, Section sec) {
-        if (oldsec == null) {
-            freeItems.remove(mi);
-        } else {
-            oldsec.removeItem(mi);
-        }
-
-        if (sec == null) {
-            freeItems.add(mi);
-        } else {
-            sec.addItem(mi);
-        }
-    }
-
-    public void moveFreeItem(MenuItem mi, int position) {
-        this.freeItems.remove(mi);
-        this.freeItems.add(position, mi);
-    }
-
-    public void removeItem(MenuItem mi) {
-        Section sec = getSectionForItem(mi);
-        if (sec == null) freeItems.remove(mi);
-        else sec.removeItem(mi);
-    }
-
-    // STATIC METHODS FOR PERSISTENCE
 
     public static void saveNewMenu(Menu m) {
         String menuInsert = "INSERT INTO catering.Menus (title, owner_id, published) VALUES (?, ?, ?);";
@@ -351,7 +131,6 @@ public class Menu {
         featuresToDB(m);
     }
 
-
     public static void saveMenuPublished(Menu m) {
         String upd = "UPDATE Menus SET published = " + m.published +
                 " WHERE id = " + m.getId();
@@ -376,7 +155,6 @@ public class Menu {
             }
         });
     }
-
 
     public static void deleteMenu(Menu m) {
         // delete sections
@@ -478,7 +256,7 @@ public class Menu {
             // find if "in use"
             String inuseQ = "SELECT * FROM Services WHERE approved_menu_id = " + m.id +
                     " OR " +
-                    "proposed_menu_id = "+ m.id;
+                    "proposed_menu_id = " + m.id;
             PersistenceManager.executeQuery(inuseQ, new ResultHandler() {
                 @Override
                 public void handle(ResultSet rs) throws SQLException {
@@ -487,7 +265,7 @@ public class Menu {
                 }
             });
         }
-        for (Menu m: newMenus) {
+        for (Menu m : newMenus) {
             loadedMenus.put(m.id, m);
         }
         return FXCollections.observableArrayList(loadedMenus.values());
@@ -509,7 +287,6 @@ public class Menu {
         });
     }
 
-
     public static void saveFreeItemOrder(Menu m) {
         String upd = "UPDATE MenuItems SET position = ? WHERE id = ?";
         PersistenceManager.executeBatchUpdate(upd, m.freeItems.size(), new BatchUpdateHandler() {
@@ -524,5 +301,218 @@ public class Menu {
                 // no generated ids to handle
             }
         });
+    }
+
+    public boolean getFeatureValue(String feature) {
+        return this.featuresMap.get(feature);
+    }
+
+    public void setFeatureValue(String feature, boolean val) {
+        if (this.featuresMap.containsKey(feature)) {
+            this.featuresMap.put(feature, val);
+        }
+    }
+
+    public String testString() {
+        String result = this.toString() + "\n";
+        for (String f : featuresMap.keySet()) {
+            result += f + ": " + featuresMap.get(f) + "\n";
+        }
+
+        result += "\n";
+        for (Section sec : sections) {
+            result += sec.testString();
+            result += "\n";
+        }
+
+        if (freeItems.size() > 0) {
+            result += "\n" + "VOCI LIBERE:\n";
+        }
+        for (MenuItem mi : freeItems) {
+            result += "\t" + mi.toString() + "\n";
+        }
+
+        return result;
+    }
+
+    public String toString() {
+        return title + " (autore: " + owner.getUserName() + ")," + (published ? " " : " non ") +
+                "pubblicato," + (inUse ? " " : " non ") + "in uso";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void addFakeSections() {
+        this.sections.add(new Section("Antipasti"));
+        this.sections.add(new Section("Primi"));
+        this.sections.add(new Section("Secondi"));
+        this.sections.add(new Section("Dessert"));
+
+        Recipe[] all = CatERing.getInstance().getRecipeManager().getRecipes().toArray(new Recipe[0]);
+        freeItems.add(new MenuItem(all[3]));
+        freeItems.add(new MenuItem(all[4]));
+        freeItems.add(new MenuItem(all[5]));
+    }
+
+    public Section addSection(String name) {
+        Section sec = new Section(name);
+        this.sections.add(sec);
+        return sec;
+    }
+
+    public MenuItem addItem(Recipe recipe, Section sec, String desc) {
+        MenuItem mi = new MenuItem(recipe, desc);
+        if (sec != null) {
+            sec.addItem(mi);
+        } else {
+            this.freeItems.add(mi);
+        }
+        return mi;
+    }
+
+    public int getSectionPosition(Section sec) {
+        return this.sections.indexOf(sec);
+    }
+
+    public ObservableList<Section> getSections() {
+        return FXCollections.unmodifiableObservableList(this.sections);
+    }
+
+    public Section getSectionForItem(MenuItem mi) {
+        for (Section sec : sections) {
+            if (sec.getItemPosition(mi) >= 0)
+                return sec;
+        }
+        if (freeItems.indexOf(mi) >= 0) return null;
+        throw new IllegalArgumentException();
+    }
+
+    public int getFreeItemPosition(MenuItem mi) {
+        return freeItems.indexOf(mi);
+    }
+
+    public ObservableList<MenuItem> getFreeItems() {
+        return FXCollections.unmodifiableObservableList(this.freeItems);
+    }
+
+    public void setPublished(boolean b) {
+        published = b;
+    }
+
+    public boolean isInUse() {
+        return this.inUse;
+    }
+
+    public boolean isOwner(User u) {
+        return u.getId() == this.owner.getId();
+    }
+
+    public ObservableMap<String, Boolean> getFeatures() {
+        return FXCollections.unmodifiableObservableMap(this.featuresMap);
+    }
+
+    public void updateFreeItems(ObservableList<MenuItem> newItems) {
+        ObservableList<MenuItem> updatedList = FXCollections.observableArrayList();
+        for (int i = 0; i < newItems.size(); i++) {
+            MenuItem mi = newItems.get(i);
+            MenuItem prev = this.findItemById(mi.getId());
+            if (prev == null) {
+                updatedList.add(mi);
+            } else {
+                prev.setDescription(mi.getDescription());
+                prev.setItemRecipe(mi.getItemRecipe());
+                updatedList.add(prev);
+            }
+        }
+        this.freeItems.clear();
+        this.freeItems.addAll(updatedList);
+    }
+
+    private MenuItem findItemById(int id) {
+        for (MenuItem mi : freeItems) {
+            if (mi.getId() == id) return mi;
+        }
+        return null;
+    }
+
+    // STATIC METHODS FOR PERSISTENCE
+
+    private void updateSections(ObservableList<Section> newSections) {
+        ObservableList<Section> updatedList = FXCollections.observableArrayList();
+        for (int i = 0; i < newSections.size(); i++) {
+            Section sec = newSections.get(i);
+            Section prev = this.findSectionById(sec.getId());
+            if (prev == null) {
+                updatedList.add(sec);
+            } else {
+                prev.setName(sec.getName());
+                prev.updateItems(sec.getItems());
+                updatedList.add(prev);
+            }
+        }
+        this.sections.clear();
+        this.sections.addAll(updatedList);
+    }
+
+    private Section findSectionById(int id) {
+        for (Section s : sections) {
+            if (s.getId() == id) return s;
+        }
+        return null;
+    }
+
+    public void removeSection(Section s, boolean deleteItems) {
+        if (!deleteItems) {
+            this.freeItems.addAll(s.getItems());
+        }
+        this.sections.remove(s);
+    }
+
+    public int getSectionCount() {
+        return sections.size();
+    }
+
+    public int getFreeItemCount() {
+        return freeItems.size();
+    }
+
+    public void moveSection(Section sec, int position) {
+        sections.remove(sec);
+        sections.add(position, sec);
+    }
+
+    public void changeItemSection(MenuItem mi, Section oldsec, Section sec) {
+        if (oldsec == null) {
+            freeItems.remove(mi);
+        } else {
+            oldsec.removeItem(mi);
+        }
+
+        if (sec == null) {
+            freeItems.add(mi);
+        } else {
+            sec.addItem(mi);
+        }
+    }
+
+    public void moveFreeItem(MenuItem mi, int position) {
+        this.freeItems.remove(mi);
+        this.freeItems.add(position, mi);
+    }
+
+    public void removeItem(MenuItem mi) {
+        Section sec = getSectionForItem(mi);
+        if (sec == null) freeItems.remove(mi);
+        else sec.removeItem(mi);
     }
 }

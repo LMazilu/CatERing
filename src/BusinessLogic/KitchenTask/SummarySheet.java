@@ -3,17 +3,18 @@ package BusinessLogic.KitchenTask;
 import BusinessLogic.Shift.Shift;
 import BusinessLogic.UseCaseLogicException;
 import BusinessLogic.recipe.Recipe;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-
-public class SummarySheet{
+public class SummarySheet {
 
     private static final String DIFFICULTY = "Difficulty";
     private static final String PRIORITY = "Priority";
     private ObservableList<CookingTask> _cookingTasks;
+
+    public SummarySheet() {
+        this._cookingTasks = FXCollections.observableArrayList();
+    }
 
     public void addCookingTask(ObservableList<Shift> shift,
                                Recipe recipe,
@@ -26,10 +27,6 @@ public class SummarySheet{
         CookingTask ct = new CookingTask();
         ct.createCookingTask(shift, recipe, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
         _cookingTasks.add(ct);
-    }
-
-    public SummarySheet() {
-        this._cookingTasks = FXCollections.observableArrayList();
     }
 
     public void deleteCookingTask(CookingTask cookingTask) {
@@ -64,19 +61,23 @@ public class SummarySheet{
         }
     }
 
-    public void markCookingTaskAsDone(CookingTask cookingTask){
+    public void markCookingTaskAsDone(CookingTask cookingTask) {
         cookingTask.setCookingTaskDone();
         deleteCookingTask(cookingTask);
     }
 
-    public ObservableList<CookingTask> getSummarySheet(){
+    public ObservableList<CookingTask> getSummarySheet() {
         return this._cookingTasks;
     }
 
     @Override
     public String toString() {
-        return "summarySheet{" +
-                "_cookingTasks=" + _cookingTasks +
-                '}';
+        String s = "";
+        for (CookingTask ct : _cookingTasks) {
+            s += "\n";
+            s += ct.toString();
+        }
+        return s;
     }
+
 }

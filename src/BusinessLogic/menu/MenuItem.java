@@ -1,11 +1,11 @@
 package BusinessLogic.menu;
 
 import BusinessLogic.recipe.Recipe;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import Persistence.BatchUpdateHandler;
 import Persistence.PersistenceManager;
 import Persistence.ResultHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,36 +38,6 @@ public class MenuItem {
         this.itemRecipe = mi.itemRecipe;
     }
 
-    public int getId() {
-        return id;
-    }
-
-
-    public String toString() {
-        return description;
-    }
-
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Recipe getItemRecipe() {
-        return itemRecipe;
-    }
-
-    public void setItemRecipe(Recipe itemRecipe) {
-        this.itemRecipe = itemRecipe;
-    }
-
-
-
-    // STATIC METHODS FOR PERSISTENCE
-
     public static void saveAllNewItems(int menuid, int sectionid, List<MenuItem> items) {
         String itemInsert = "INSERT INTO catering.MenuItems (menu_id, section_id, description, recipe_id, position) VALUES (?, ?, ?, ?, ?);";
         PersistenceManager.executeBatchUpdate(itemInsert, items.size(), new BatchUpdateHandler() {
@@ -86,6 +56,7 @@ public class MenuItem {
             }
         });
     }
+
     public static void saveNewItem(int menuid, int sectionid, MenuItem mi, int pos) {
         String itemInsert = "INSERT INTO catering.MenuItems (menu_id, section_id, description, recipe_id, position) VALUES (" +
                 menuid +
@@ -93,8 +64,8 @@ public class MenuItem {
                 sectionid +
                 ", " +
                 "'" + PersistenceManager.escapeString(mi.description) + "', " +
-                + mi.itemRecipe.getId() + ", " +
-                + pos + ");";
+                +mi.itemRecipe.getId() + ", " +
+                +pos + ");";
         PersistenceManager.executeUpdate(itemInsert);
 
         mi.id = PersistenceManager.getLastId();
@@ -124,6 +95,7 @@ public class MenuItem {
 
         return result;
     }
+
     public static void saveSection(int sec_id, MenuItem mi) {
         String upd = "UPDATE MenuItems SET section_id = " + sec_id +
                 " WHERE id = " + mi.id;
@@ -139,5 +111,32 @@ public class MenuItem {
     public static void removeItem(MenuItem mi) {
         String rem = "DELETE FROM MenuItems WHERE id = " + mi.getId();
         PersistenceManager.executeUpdate(rem);
+    }
+
+
+    // STATIC METHODS FOR PERSISTENCE
+
+    public int getId() {
+        return id;
+    }
+
+    public String toString() {
+        return description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Recipe getItemRecipe() {
+        return itemRecipe;
+    }
+
+    public void setItemRecipe(Recipe itemRecipe) {
+        this.itemRecipe = itemRecipe;
     }
 }

@@ -1,10 +1,10 @@
 package BusinessLogic.event;
 
 import BusinessLogic.User.User;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import Persistence.PersistenceManager;
 import Persistence.ResultHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -24,16 +24,6 @@ public class EventInfo implements EventItemInfo {
         this.name = name;
         id = 0;
     }
-
-    public ObservableList<ServiceInfo> getServices() {
-        return FXCollections.unmodifiableObservableList(this.services);
-    }
-
-    public String toString() {
-        return name + ": " + dateStart + "-" + dateEnd + ", " + participants + " pp. (" + organizer.getUserName() + ")";
-    }
-
-    // STATIC METHODS FOR PERSISTENCE
 
     public static ObservableList<EventInfo> loadAllEventInfo() {
         ObservableList<EventInfo> all = FXCollections.observableArrayList();
@@ -57,5 +47,15 @@ public class EventInfo implements EventItemInfo {
             e.services = ServiceInfo.loadServiceInfoForEvent(e.id);
         }
         return all;
+    }
+
+    public ObservableList<ServiceInfo> getServices() {
+        return FXCollections.unmodifiableObservableList(this.services);
+    }
+
+    // STATIC METHODS FOR PERSISTENCE
+
+    public String toString() {
+        return name + ": " + dateStart + "-" + dateEnd + ", " + participants + " pp. (" + organizer.getUserName() + ")";
     }
 }

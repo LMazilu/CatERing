@@ -1,24 +1,14 @@
 package BusinessLogic.Shift;
 
-import Persistence.PersistenceManager;
-import Persistence.ResultHandler;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Time;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Shift {
     private int id;
     private Double duration;
     private Time begin;
 
-    public Shift() {}
+    public Shift() {
+    }
 
     public Shift(Time begin, Double duration) {
         this.begin = begin;
@@ -28,13 +18,13 @@ public class Shift {
     public int getId() {
         return id;
     }
-    public Double getDuration() {
-        return duration;
-    }
-
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Double getDuration() {
+        return duration;
     }
 
     public void setDuration(Double duration) {

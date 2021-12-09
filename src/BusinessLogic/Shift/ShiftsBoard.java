@@ -33,7 +33,7 @@ public class ShiftsBoard {
                 }
             }
         });
-        ObservableList<Shift> shList =  FXCollections.observableArrayList(all.values());
+        ObservableList<Shift> shList = FXCollections.observableArrayList(all.values());
         Collections.sort(shList, Comparator.comparing(Shift::getDuration).thenComparing(Shift::getDuration));
         return shList;
     }

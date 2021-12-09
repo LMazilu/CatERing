@@ -1,7 +1,6 @@
 package ui.menu;
 
 import BusinessLogic.CatERing;
-import BusinessLogic.CatERing;
 import BusinessLogic.menu.Section;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -55,7 +54,8 @@ public class ChooseSectionDialog {
         okButton.setDisable(!freeItemsCheckBox.isSelected() && sectionComboBox.getValue() == null);
     }
 
-    @FXML void sectionComboChanged() {
+    @FXML
+    void sectionComboChanged() {
         okButton.setDisable(!freeItemsCheckBox.isSelected() && sectionComboBox.getValue() == null);
     }
 

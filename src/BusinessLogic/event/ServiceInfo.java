@@ -1,9 +1,9 @@
 package BusinessLogic.event;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import Persistence.PersistenceManager;
 import Persistence.ResultHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -21,13 +21,6 @@ public class ServiceInfo implements EventItemInfo {
     public ServiceInfo(String name) {
         this.name = name;
     }
-
-
-    public String toString() {
-        return name + ": " + date + " (" + timeStart + "-" + timeEnd + "), " + participants + " pp.";
-    }
-
-    // STATIC METHODS FOR PERSISTENCE
 
     public static ObservableList<ServiceInfo> loadServiceInfoForEvent(int event_id) {
         ObservableList<ServiceInfo> result = FXCollections.observableArrayList();
@@ -48,5 +41,11 @@ public class ServiceInfo implements EventItemInfo {
         });
 
         return result;
+    }
+
+    // STATIC METHODS FOR PERSISTENCE
+
+    public String toString() {
+        return name + ": " + date + " (" + timeStart + "-" + timeEnd + "), " + participants + " pp.";
     }
 }

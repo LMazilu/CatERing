@@ -10,38 +10,43 @@ import java.util.ArrayList;
 
 public class KitchenTaskManager {
     private SummarySheet _currentSummarySheet = new SummarySheet();
-    private ArrayList<KitchenTaskReceiver>  _kitchenTaskReceivers;
+    private ArrayList<KitchenTaskReceiver> _kitchenTaskReceivers;
 
-    public void addReceiver(KitchenTaskReceiver ktr){
+    public KitchenTaskManager() {
+    }
+
+    public void addReceiver(KitchenTaskReceiver ktr) {
         this._kitchenTaskReceivers.add(ktr);
     }
-    public void deleteReceiver(KitchenTaskReceiver ktr){
+
+    public void deleteReceiver(KitchenTaskReceiver ktr) {
         this._kitchenTaskReceivers.remove(ktr);
     }
 
-    private void notifyCookingTaskAdded(CookingTask cookingTask){
-        for(KitchenTaskReceiver ktr : _kitchenTaskReceivers){
+    private void notifyCookingTaskAdded(CookingTask cookingTask) {
+        for (KitchenTaskReceiver ktr : _kitchenTaskReceivers) {
             ktr.updateCookingTaskAdded(cookingTask);
         }
     }
-    private void notifyCookingTaskDeleted(CookingTask cookingTask){
-        for(KitchenTaskReceiver ktr : _kitchenTaskReceivers){
+
+    private void notifyCookingTaskDeleted(CookingTask cookingTask) {
+        for (KitchenTaskReceiver ktr : _kitchenTaskReceivers) {
             ktr.updateCookingTaskDeleted(cookingTask);
         }
     }
-    private void notifyCookingTaskUpdated(CookingTask cookingTask){
-        for(KitchenTaskReceiver ktr : _kitchenTaskReceivers){
+
+    private void notifyCookingTaskUpdated(CookingTask cookingTask) {
+        for (KitchenTaskReceiver ktr : _kitchenTaskReceivers) {
             ktr.updateCookingTaskUpdated(cookingTask);
         }
     }
-    private void notifyCookingTasksSorted(SummarySheet summarySheet){
-        for(KitchenTaskReceiver ktr : _kitchenTaskReceivers){
+
+    private void notifyCookingTasksSorted(SummarySheet summarySheet) {
+        for (KitchenTaskReceiver ktr : _kitchenTaskReceivers) {
             ktr.updateSummarySheetSorted(summarySheet);
         }
 
     }
-
-    public KitchenTaskManager() {}
 
     public void addCookingTask(ObservableList<Shift> shift,
                                Recipe recipe,

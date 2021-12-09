@@ -99,7 +99,7 @@ public class MenuContent {
                     editSectionButton.setDisable(false);
                     int pos = sectionList.getSelectionModel().getSelectedIndex();
                     upSectionButton.setDisable(pos <= 0);
-                    downSectionButton.setDisable(pos >= (CatERing.getInstance().getMenuManager().getCurrentMenu().getSectionCount()-1));
+                    downSectionButton.setDisable(pos >= (CatERing.getInstance().getMenuManager().getCurrentMenu().getSectionCount() - 1));
                 } else if (newSection == null) {
                     // disable section actions
                     deleteSectionButton.setDisable(true);
@@ -118,7 +118,8 @@ public class MenuContent {
                 if (newItem != null && newItem != oldItem) {
                     int pos = itemsList.getSelectionModel().getSelectedIndex();
                     int count = 0;
-                    if (freeItemsToggle.isSelected()) count = CatERing.getInstance().getMenuManager().getCurrentMenu().getFreeItemCount();
+                    if (freeItemsToggle.isSelected())
+                        count = CatERing.getInstance().getMenuManager().getCurrentMenu().getFreeItemCount();
                     else {
                         Section sec = sectionList.getSelectionModel().getSelectedItem();
                         if (sec != null) {
@@ -126,7 +127,7 @@ public class MenuContent {
                         }
                     }
                     upItemButton.setDisable(pos <= 0);
-                    downItemButton.setDisable(pos >= (count-1));
+                    downItemButton.setDisable(pos >= (count - 1));
                     spostaItemButton.setDisable(false);
                     modificaItemButton.setDisable(false);
                     deleteItem.setDisable(false);
@@ -458,8 +459,7 @@ public class MenuContent {
         try {
             if (sec == null) {
                 CatERing.getInstance().getMenuManager().moveMenuItem(mi, newpos);
-            }
-            else {
+            } else {
                 CatERing.getInstance().getMenuManager().moveMenuItem(mi, sec, newpos);
             }
             itemsList.refresh();

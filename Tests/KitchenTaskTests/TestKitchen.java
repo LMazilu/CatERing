@@ -1,21 +1,14 @@
 package KitchenTaskTests;
 
 import BusinessLogic.CatERing;
-import BusinessLogic.UseCaseLogicException;
-import BusinessLogic.event.EventInfo;
-import BusinessLogic.event.ServiceInfo;
-import BusinessLogic.KitchenTask.*;
-import BusinessLogic.menu.Menu;
-import BusinessLogic.menu.Section;
-import BusinessLogic.recipe.Recipe;
+import BusinessLogic.KitchenTask.CookingTask;
+import BusinessLogic.KitchenTask.SummarySheet;
 import BusinessLogic.Shift.Shift;
-import BusinessLogic.User.User;
+import BusinessLogic.UseCaseLogicException;
+import BusinessLogic.menu.Menu;
+import BusinessLogic.recipe.Recipe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
 
 public class TestKitchen {
     public static void main(String[] args) {
@@ -38,7 +31,7 @@ public class TestKitchen {
             ObservableList<Shift> selectedShift = FXCollections.observableArrayList();
             selectedShift.add(shifts.get(4));
             selectedShift.add(shifts.get(5));
-            sheet.addCookingTask(selectedShift, recipeList.get(4),2.0, 1, 1, 1, 1);
+            sheet.addCookingTask(selectedShift, recipeList.get(4), 2.0, 1, 1, 1, 1);
             sheet.addCookingTask(selectedShift, recipeList.get(2), 3.0, null, null, null, null);
             sheet.addCookingTask(selectedShift, recipeList.get(3), 4.0, null, null, null, null);
             sheet.addCookingTask(selectedShift, recipeList.get(4), 1.0, null, null, null, null);
@@ -47,9 +40,9 @@ public class TestKitchen {
 
             System.out.println("\n Specify quantity, portions, difficulty and priority ");
             ObservableList<CookingTask> cookingTaskList = sheet.getSummarySheet();
-            sheet.updateCookingTask(cookingTaskList.get(1),null, 2,3,5,1,2);
-            sheet.updateCookingTask(cookingTaskList.get(2),null, 3,2,4,2,1);
-            sheet.updateCookingTask(cookingTaskList.get(3),null, 4,1,3,4,5);
+            sheet.updateCookingTask(cookingTaskList.get(1), null, 2, 3, 5, 1, 2);
+            sheet.updateCookingTask(cookingTaskList.get(2), null, 3, 2, 4, 2, 1);
+            sheet.updateCookingTask(cookingTaskList.get(3), null, 4, 1, 3, 4, 5);
 
             System.out.println("\n Test for order summarySheet by Difficulty");
             sheet.sortSummarySheet("Difficulty");

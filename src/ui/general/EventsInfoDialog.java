@@ -12,21 +12,20 @@ import javafx.stage.Stage;
 
 public class EventsInfoDialog {
 
-    private Stage myStage;
-
     @FXML
     TreeView<EventItemInfo> eventTree;
+    private Stage myStage;
 
     public void initialize() {
         ObservableList<EventInfo> all = CatERing.getInstance().getEventManager().getEventInfo();
         eventTree.setShowRoot(false);
         TreeItem<EventItemInfo> root = new TreeItem<>(null);
 
-        for (EventInfo e: all) {
+        for (EventInfo e : all) {
             TreeItem<EventItemInfo> node = new TreeItem<>(e);
             root.getChildren().add(node);
             ObservableList<ServiceInfo> serv = e.getServices();
-            for (ServiceInfo s: serv) {
+            for (ServiceInfo s : serv) {
                 node.getChildren().add(new TreeItem<>(s));
             }
         }

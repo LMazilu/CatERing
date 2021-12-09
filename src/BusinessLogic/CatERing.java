@@ -1,45 +1,21 @@
 package BusinessLogic;
 
-import BusinessLogic.KitchenTask.CookingTask;
 import BusinessLogic.KitchenTask.KitchenTaskManager;
-import BusinessLogic.KitchenTask.SummarySheet;
 import BusinessLogic.Shift.ShiftsManager;
 import BusinessLogic.User.UserManager;
 import BusinessLogic.event.EventManager;
-import BusinessLogic.menu.*;
-import BusinessLogic.recipe.*;
-import Persistence.*;
-import javafx.collections.ObservableList;
+import BusinessLogic.menu.MenuManager;
+import BusinessLogic.recipe.RecipeManager;
+import Persistence.MenuPersistence;
 
 public class CatERing {
     private static CatERing singleInstance;
-
-    public static CatERing getInstance() {
-        if (singleInstance == null) {
-            singleInstance = new CatERing();
-        }
-        return singleInstance;
-    }
-
     private MenuManager menuManager;
     private RecipeManager recipeManager;
     private UserManager userManager;
     private EventManager eventManager;
     private ShiftsManager shiftsManager;
     private KitchenTaskManager kitchenTaskManager;
-
-    public ShiftsManager getShiftsManager() { return shiftsManager; }
-
-    public void setShiftsManager(ShiftsManager shiftsManager) {
-        this.shiftsManager = shiftsManager;
-    }
-
-    public KitchenTaskManager getKitchenTaskManager() {
-        return kitchenTaskManager;
-    }
-
-    public void setKitchenTaskManager(KitchenTaskManager kitchenTaskManager) { this.kitchenTaskManager = kitchenTaskManager;  }
-
     private MenuPersistence menuPersistence;
 
     private CatERing() {
@@ -53,6 +29,28 @@ public class CatERing {
         shiftsManager = new ShiftsManager();
     }
 
+    public static CatERing getInstance() {
+        if (singleInstance == null) {
+            singleInstance = new CatERing();
+        }
+        return singleInstance;
+    }
+
+    public ShiftsManager getShiftsManager() {
+        return shiftsManager;
+    }
+
+    public void setShiftsManager(ShiftsManager shiftsManager) {
+        this.shiftsManager = shiftsManager;
+    }
+
+    public KitchenTaskManager getKitchenTaskManager() {
+        return kitchenTaskManager;
+    }
+
+    public void setKitchenTaskManager(KitchenTaskManager kitchenTaskManager) {
+        this.kitchenTaskManager = kitchenTaskManager;
+    }
 
     public MenuManager getMenuManager() {
         return menuManager;
@@ -66,7 +64,9 @@ public class CatERing {
         return userManager;
     }
 
-    public EventManager getEventManager() { return eventManager; }
+    public EventManager getEventManager() {
+        return eventManager;
+    }
 /*
     public static void main(String[] args) {
 

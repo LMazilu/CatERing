@@ -1,13 +1,11 @@
 package Persistence;
 
-import com.sun.javafx.binding.StringFormatter;
-
 import java.sql.*;
 
 public class PersistenceManager {
-    private static String url="jdbc:mysql://localhost:3306/catering?serverTimezone=UTC";
-    private static String username ="root";
-    private static String password ="";
+    private static String url = "jdbc:mysql://localhost:3306/catering?serverTimezone=UTC";
+    private static String username = "root";
+    private static String password = "";
 
     private static int lastId;
 
@@ -19,6 +17,7 @@ public class PersistenceManager {
         input = input.replace("\t", "\\t");
         return input;
     }
+
     public static void testSQLConnection() {
         try (Connection conn = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = conn.prepareStatement("SELECT * FROM Users");

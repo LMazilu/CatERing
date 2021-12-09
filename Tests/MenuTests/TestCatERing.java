@@ -32,9 +32,9 @@ public class TestCatERing {
 
             System.out.println("\nTEST GET EVENT INFO");
             ObservableList<EventInfo> events = CatERing.getInstance().getEventManager().getEventInfo();
-            for (EventInfo e: events) {
+            for (EventInfo e : events) {
                 System.out.println(e);
-                for (ServiceInfo s: e.getServices()) {
+                for (ServiceInfo s : e.getServices()) {
                     System.out.println("\t" + s);
                 }
             }

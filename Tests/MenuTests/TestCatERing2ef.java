@@ -31,7 +31,7 @@ public class TestCatERing2ef {
             System.out.println(m.testString());
 
             System.out.println("\nTEST MOVE ITEM");
-            CatERing.getInstance().getMenuManager().moveMenuItem(it1, antipasti,2);
+            CatERing.getInstance().getMenuManager().moveMenuItem(it1, antipasti, 2);
             CatERing.getInstance().getMenuManager().moveMenuItem(freeit, 0);
             System.out.println(m.testString());
 

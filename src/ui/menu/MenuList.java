@@ -2,9 +2,9 @@ package ui.menu;
 
 import BusinessLogic.CatERing;
 import BusinessLogic.UseCaseLogicException;
+import BusinessLogic.User.User;
 import BusinessLogic.menu.Menu;
 import BusinessLogic.menu.MenuException;
-import BusinessLogic.User.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -17,19 +17,16 @@ import javafx.scene.control.TextInputDialog;
 import java.util.Optional;
 
 public class MenuList {
-    private MenuManagement menuManagementController;
-
     @FXML
     ListView<Menu> menuList;
-
     @FXML
     Button eliminaButton;
     @FXML
     Button apriButton;
     @FXML
     Button copiaButton;
-
     ObservableList<Menu> menuListItems;
+    private MenuManagement menuManagementController;
 
     @FXML
     public void nuovoButtonPressed() {
@@ -88,7 +85,8 @@ public class MenuList {
         }
     }
 
-    @FXML void apriMenuButtonPressed() {
+    @FXML
+    void apriMenuButtonPressed() {
         try {
             Menu m = menuList.getSelectionModel().getSelectedItem();
             CatERing.getInstance().getMenuManager().chooseMenu(m);
@@ -98,7 +96,8 @@ public class MenuList {
         }
     }
 
-    @FXML void copiaMenuButtonPressed() {
+    @FXML
+    void copiaMenuButtonPressed() {
         try {
             Menu m = menuList.getSelectionModel().getSelectedItem();
             Menu copia = CatERing.getInstance().getMenuManager().copyMenu(m);

@@ -6,12 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.stage.Stage;
 import ui.menu.MenuManagement;
 
 import java.io.IOException;
 
-public class Main{
+public class Main {
 
     @FXML
     AnchorPane paneContainer;

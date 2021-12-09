@@ -22,39 +22,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class MenuFeaturesDialog {
-    public static class FeatureRow {
-        public StringProperty featureName;
-        public BooleanProperty featureValue;
-
-        public FeatureRow() {
-            featureName = new SimpleStringProperty("");
-            featureValue = new SimpleBooleanProperty(false);
-        }
-
-        public void setFeatureName(String n) {
-            featureName.setValue(n);
-        }
-
-        public String getFeatureName() {
-            return featureName.getValue();
-        }
-
-        public void setFeatureValue(boolean b) {
-            featureValue.setValue(b);
-        }
-
-        public boolean getFeatureValue() {
-            return featureValue.getValue();
-        }
-    }
-
     @FXML
     TableView<FeatureRow> featuresTable;
     ObservableList<FeatureRow> rows;
-
     Stage myStage;
-
-
 
     public void initialize() {
         ObservableMap<String, Boolean> features = CatERing.getInstance().getMenuManager().getCurrentMenu().getFeatures();
@@ -64,7 +35,7 @@ public class MenuFeaturesDialog {
         fnames.addAll(features.keySet());
         Collections.sort(fnames);
         rows = FXCollections.observableArrayList();
-        for (String s: fnames) {
+        for (String s : fnames) {
             FeatureRow row = new FeatureRow();
             row.featureName = new SimpleStringProperty(s);
             row.featureValue = new SimpleBooleanProperty(features.get(s));
@@ -111,7 +82,34 @@ public class MenuFeaturesDialog {
         this.myStage.close();
     }
 
-    @FXML public void annullaButtonPressed() {
+    @FXML
+    public void annullaButtonPressed() {
         this.myStage.close();
+    }
+
+    public static class FeatureRow {
+        public StringProperty featureName;
+        public BooleanProperty featureValue;
+
+        public FeatureRow() {
+            featureName = new SimpleStringProperty("");
+            featureValue = new SimpleBooleanProperty(false);
+        }
+
+        public String getFeatureName() {
+            return featureName.getValue();
+        }
+
+        public void setFeatureName(String n) {
+            featureName.setValue(n);
+        }
+
+        public boolean getFeatureValue() {
+            return featureValue.getValue();
+        }
+
+        public void setFeatureValue(boolean b) {
+            featureValue.setValue(b);
+        }
     }
 }
