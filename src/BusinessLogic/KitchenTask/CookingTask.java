@@ -1,6 +1,7 @@
 package BusinessLogic.KitchenTask;
 
 import BusinessLogic.Shift.Shift;
+import BusinessLogic.Shift.ShiftsBoard;
 import BusinessLogic.recipe.Recipe;
 import Persistence.BatchUpdateHandler;
 import Persistence.PersistenceManager;
@@ -14,9 +15,6 @@ import java.sql.SQLException;
 
 public class CookingTask {
     private ObservableList<Shift> _shift;
-
-
-
     private int id;
     private Recipe _recipe;
     private double _estimatedTime;
@@ -28,6 +26,11 @@ public class CookingTask {
     private boolean completed = false;
 
     public CookingTask() {
+    }
+
+    public CookingTask(Recipe recipe, ObservableList<Shift> shift) {
+        this._recipe = recipe;
+        this._shift = shift;
     }
 
 
@@ -110,40 +113,19 @@ public class CookingTask {
         this.completed = true;
     }
 
-
-
-
-    @Override
-    public String toString() {
-        return "cookingTask{" +
-                "  turn=" + _shift +
-                ", recipe=" + _recipe +
-                ", estimatedTime=" + _estimatedTime +
-                ", preparationQuantity=" + _preparationQuantity +
-                ", numberOfPortions=" + _numberOfPortions +
-                ", priority=" + _priority +
-                ", difficulty=" + _difficulty +
-                ", completed=" + completed +
-                '}';
-    }
-
     public static ObservableList<CookingTask> loadTaskForId(int id) {
         ObservableList<CookingTask> result = FXCollections.observableArrayList();
         String query = "SELECT * FROM cookingTask WHERE id = " + id;
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
-                CookingTask ct = new CookingTask();
-
-
-                //kt.set_recipe(rs.getString("recipe"));
-                //kt.setTurn
+                CookingTask ct = new CookingTask(Recipe.loadRecipeById(rs.getInt("recipe")), ShiftsBoard.loadShiftOfCoookingTaskById(id));
                 ct.setId(rs.getInt("id"));
                 ct.set_estimatedTime(rs.getDouble("estimatedTime"));
                 ct.set_preparationQuantity(rs.getInt("quantity"));
                 ct.set_numberOfPortions(rs.getInt("numberOfPortions"));
                 ct.set_priority((rs.getInt("priority")));
-                ct.set_priority((rs.getInt("difficulty")));
+                ct.set_difficulty((rs.getInt("difficulty")));
                 result.add(ct);
             }
         });
@@ -153,63 +135,59 @@ public class CookingTask {
 
     public static void insertCookingTask(CookingTask cookingTask) {
         String itemInsert = "INSERT INTO cookingtask (id_recipe,estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty) VALUES (" +
-                cookingTask._recipe + ", " +
+                cookingTask._recipe.getId() + ", " +
                 cookingTask._estimatedTime + ", " +
                 cookingTask._preparationQuantity + "," +
                 cookingTask._numberOfPortions + "," +
                 cookingTask._priority + "," +
                 cookingTask._difficulty + ");";
+        PersistenceManager.executeUpdate(itemInsert);
+        cookingTask.id = PersistenceManager.getLastId();
+        for(Shift s : cookingTask._shift){
+            String itemTurnInsert = "INSERT INTO shift_cookingtask_association (id_shift, id_cookingtask) VALUES (" + cookingTask._shift + "," + cookingTask.id + ");";
+            PersistenceManager.executeUpdate(itemTurnInsert);
+        }
+
+    }
+
+    public void markCookingTaskAsDone(CookingTask cookingTask){
+        deleteCookingTask(cookingTask);
     }
 
 
-    public static void deleteKitchenTask(CookingTask cookingTask) {
-        String rem = "DELETE FROM KitchenTask WHERE id = " + kt.getId();
-        PersistenceManager.executeUpdate(rem);
+    public static void deleteCookingTask(CookingTask cookingTask){
+        String remove = "DELETE * FROM cookingtask WHERE id =" +cookingTask.getId();
+        PersistenceManager.executeUpdate(remove);
     }
 
-    public static void saveKitchenTaskTime(CookingTask cookingTask) {
-        String upd = "UPDATE KitchenTask SET time = '" + kt.time + "' WHERE id = " + kt.id;
-        PersistenceManager.executeUpdate(upd);
+    public static void editNewCookingTask(CookingTask cookingTask) {
+        String itemEdit = "UPDATE  cookingtask SET estimatedTime="+cookingTask._estimatedTime+
+                ",preparationQuantity="+cookingTask._preparationQuantity+
+                ",numberOfPortions="+cookingTask._numberOfPortions+
+                ",priority="+cookingTask._priority+
+                ",difficulty="+cookingTask._difficulty+
+                " WHERE id="+cookingTask.id+";";
+
+        PersistenceManager.executeUpdate(itemEdit);
+        for (Shift shift : cookingTask._shift) {
+            String itemTurnEdit = "UPDATE cookingtask_has_turn SET id_shift WHERE id_cookingtask="+cookingTask.id+ ";";
+            PersistenceManager.executeUpdate(itemTurnEdit);
+        }
+
     }
 
-    public static void saveKitchenTaskQuantity(CookingTask cookingTask) {
-        String upd = "UPDATE KitchenTask SET quantity = '" + PersistenceManager.escapeString(cookingTask.quantity) + "' WHERE id = " + cookingTask.id;
-        PersistenceManager.executeUpdate(upd);
+    @Override
+    public String toString() {
+        return "CookingTask{" +
+                "_shift=" + _shift +
+                ", id=" + id +
+                ", _recipe=" + _recipe +
+                ", _estimatedTime=" + _estimatedTime +
+                ", _preparationQuantity=" + _preparationQuantity +
+                ", _numberOfPortions=" + _numberOfPortions +
+                ", _priority=" + _priority +
+                ", _difficulty=" + _difficulty +
+                ", completed=" + completed +
+                '}';
     }
-
-    public static void saveKitchenTaskCook(CookingTask cookingTask) {
-        String upd = "UPDATE KitchenTask SET cook = '" + cookingTask.cook.getId() + "' WHERE id = " + cookingTask.id;
-        PersistenceManager.executeUpdate(upd);
-    }
-
-    public static void saveKitchenTaskShift(CookingTask cookingTask) {
-        String upd = "UPDATE KitchenTask SET shift = '" + cookingTask.shift.getId() + "' WHERE id = " + cookingTask.id;
-        PersistenceManager.executeUpdate(upd);
-    }
-
-    public static void saveAllKitchenTask(int id, ObservableList<CookingTask> tasks) {
-        String taskInsert = "INSERT INTO catering.kitchentask (tasksheet, recipe, completed, position) VALUES (?, ?, ?, ?);";
-        PersistenceManager.executeBatchUpdate(taskInsert, tasks.size(), new BatchUpdateHandler() {
-            @Override
-            public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
-                ps.setInt(1, id);
-                ps.setInt(2, tasks.get(batchCount).getJob().getId());
-                ps.setBoolean(3, false);
-                ps.setInt(4, batchCount);
-            }
-
-            @Override
-            public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {
-                tasks.get(count).id = rs.getInt(1);
-            }
-        });
-    }
-
-    public static void saveKitchenTaskCompleted(KitchenTask kt) {
-        String upd = "UPDATE KitchenTask SET completed = " + kt.completed +
-                " WHERE id = " + kt.id;
-        PersistenceManager.executeUpdate(upd);
-    }
-
-
 }

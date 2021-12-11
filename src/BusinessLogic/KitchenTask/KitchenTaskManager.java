@@ -1,6 +1,7 @@
 package BusinessLogic.KitchenTask;
 
 import BusinessLogic.Shift.Shift;
+import BusinessLogic.Shift.ShiftsBoard;
 import BusinessLogic.UseCaseLogicException;
 import BusinessLogic.recipe.Recipe;
 import javafx.collections.ObservableList;
@@ -82,6 +83,7 @@ public class KitchenTaskManager {
 
 
     public void markCookingTaskAsDone(CookingTask cookingTask) {
+        cookingTask.markCookingTaskAsDone(cookingTask);
         _currentSummarySheet.markCookingTaskAsDone(cookingTask);
     }
 
