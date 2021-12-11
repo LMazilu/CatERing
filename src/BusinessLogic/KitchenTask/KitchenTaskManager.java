@@ -83,7 +83,6 @@ public class KitchenTaskManager {
 
 
     public void markCookingTaskAsDone(CookingTask cookingTask) {
-        cookingTask.markCookingTaskAsDone(cookingTask);
         _currentSummarySheet.markCookingTaskAsDone(cookingTask);
     }
 

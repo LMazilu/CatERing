@@ -3,13 +3,11 @@ package BusinessLogic.KitchenTask;
 import BusinessLogic.Shift.Shift;
 import BusinessLogic.Shift.ShiftsBoard;
 import BusinessLogic.recipe.Recipe;
-import Persistence.BatchUpdateHandler;
 import Persistence.PersistenceManager;
 import Persistence.ResultHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -119,10 +117,10 @@ public class CookingTask {
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
-                CookingTask ct = new CookingTask(Recipe.loadRecipeById(rs.getInt("recipe")), ShiftsBoard.loadShiftOfCoookingTaskById(id));
+                CookingTask ct = new CookingTask(Recipe.loadRecipeById(rs.getInt("id_recipe")), ShiftsBoard.loadShiftOfCoookingTaskById(id));
                 ct.setId(rs.getInt("id"));
                 ct.set_estimatedTime(rs.getDouble("estimatedTime"));
-                ct.set_preparationQuantity(rs.getInt("quantity"));
+                ct.set_preparationQuantity(rs.getInt("preparationQuantity"));
                 ct.set_numberOfPortions(rs.getInt("numberOfPortions"));
                 ct.set_priority((rs.getInt("priority")));
                 ct.set_difficulty((rs.getInt("difficulty")));
@@ -130,6 +128,28 @@ public class CookingTask {
             }
         });
 
+        return result;
+    }
+
+    public static ObservableList<CookingTask> loadAllCookingTasks() {
+        ObservableList<CookingTask> result = FXCollections.observableArrayList();
+        String query = "SELECT * FROM cookingTask";
+        PersistenceManager.executeQuery(query, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                CookingTask ct = new CookingTask();
+
+                ct.setId(rs.getInt("id"));
+                ct._shift = ShiftsBoard.loadAllShifts();
+                ct._recipe = Recipe.loadRecipeById(rs.getInt("id_recipe"));
+                ct.set_estimatedTime(rs.getDouble("estimatedTime"));
+                ct.set_preparationQuantity(rs.getInt("preparationQuantity"));
+                ct.set_numberOfPortions(rs.getInt("numberOfPortions"));
+                ct.set_priority((rs.getInt("priority")));
+                ct.set_difficulty((rs.getInt("difficulty")));
+                result.add(ct);
+            }
+        });
         return result;
     }
 
@@ -143,37 +163,31 @@ public class CookingTask {
                 cookingTask._difficulty + ");";
         PersistenceManager.executeUpdate(itemInsert);
         cookingTask.id = PersistenceManager.getLastId();
-        for(Shift s : cookingTask._shift){
-            String itemTurnInsert = "INSERT INTO shift_cookingtask_association (id_shift, id_cookingtask) VALUES (" + cookingTask._shift + "," + cookingTask.id + ");";
+        for (Shift s : cookingTask._shift) {
+            String itemTurnInsert = "INSERT INTO shift_cookingtask_association (id_shift, id_cookingtask) VALUES (" + s.getId() + "," + cookingTask.id + ");";
             PersistenceManager.executeUpdate(itemTurnInsert);
         }
 
     }
 
-    public void markCookingTaskAsDone(CookingTask cookingTask){
+    public void markCookingTaskAsDone(CookingTask cookingTask) {
         deleteCookingTask(cookingTask);
     }
 
 
-    public static void deleteCookingTask(CookingTask cookingTask){
-        String remove = "DELETE * FROM cookingtask WHERE id =" +cookingTask.getId();
+    public static void deleteCookingTask(CookingTask cookingTask) {
+        String remove = "DELETE FROM cookingtask WHERE id =" + cookingTask.getId();
         PersistenceManager.executeUpdate(remove);
     }
 
-    public static void editNewCookingTask(CookingTask cookingTask) {
-        String itemEdit = "UPDATE  cookingtask SET estimatedTime="+cookingTask._estimatedTime+
-                ",preparationQuantity="+cookingTask._preparationQuantity+
-                ",numberOfPortions="+cookingTask._numberOfPortions+
-                ",priority="+cookingTask._priority+
-                ",difficulty="+cookingTask._difficulty+
-                " WHERE id="+cookingTask.id+";";
-
+    public static void editCookingTask(CookingTask cookingTask) {
+        String itemEdit = "UPDATE  cookingtask SET estimatedTime=" + cookingTask._estimatedTime +
+                ",preparationQuantity=" + cookingTask._preparationQuantity +
+                ",numberOfPortions=" + cookingTask._numberOfPortions +
+                ",priority=" + cookingTask._priority +
+                ",difficulty=" + cookingTask._difficulty +
+                " WHERE id=" + cookingTask.id + ";";
         PersistenceManager.executeUpdate(itemEdit);
-        for (Shift shift : cookingTask._shift) {
-            String itemTurnEdit = "UPDATE cookingtask_has_turn SET id_shift WHERE id_cookingtask="+cookingTask.id+ ";";
-            PersistenceManager.executeUpdate(itemTurnEdit);
-        }
-
     }
 
     @Override

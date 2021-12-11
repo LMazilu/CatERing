@@ -38,4 +38,13 @@ public class Shift {
     public void setBegin(Time begin) {
         this.begin = begin;
     }
+
+    @Override
+    public String toString() {
+        return "Shift{" +
+                "id=" + id +
+                ", duration=" + duration +
+                ", begin=" + begin +
+                '}';
+    }
 }

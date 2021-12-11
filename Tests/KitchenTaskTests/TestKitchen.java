@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 public class TestKitchen {
     public static void main(String[] args) {
         try {
+
             System.out.println("Test fake login");
             CatERing.getInstance().getUserManager().fakeLogin("Lidia");
             System.out.println(CatERing.getInstance().getUserManager().getCurrentUser());
@@ -40,9 +41,9 @@ public class TestKitchen {
 
             System.out.println("\n Specify quantity, portions, difficulty and priority ");
             ObservableList<CookingTask> cookingTaskList = sheet.getSummarySheet();
-            sheet.updateCookingTask(cookingTaskList.get(1), null, 2, 3, 5, 1, 2);
-            sheet.updateCookingTask(cookingTaskList.get(2), null, 3, 2, 4, 2, 1);
-            sheet.updateCookingTask(cookingTaskList.get(3), null, 4, 1, 3, 4, 5);
+            sheet.updateCookingTask(cookingTaskList.get(0), null, 2, 30, 30, 30, 30);
+            //sheet.updateCookingTask(cookingTaskList.get(2), null, 3, 2, 4, 2, 1);
+            //sheet.updateCookingTask(cookingTaskList.get(3), null, 4, 1, 3, 4, 5);
 
             System.out.println("\n Test for order summarySheet by Difficulty");
             sheet.sortSummarySheet("Difficulty");
@@ -54,9 +55,9 @@ public class TestKitchen {
             sheet.markCookingTaskAsDone(cookingTaskList.get(2));
 
             System.out.println("\n Test for delete cooking task");
-            sheet.deleteCookingTask(cookingTaskList.get(2));
+            sheet.deleteCookingTask(cookingTaskList.get(0));
 
-            System.out.println(sheet.toString());
+            System.out.println(sheet.getSummarySheet());
 
         } catch (UseCaseLogicException e) {
             e.printStackTrace();

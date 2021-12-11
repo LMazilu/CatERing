@@ -13,7 +13,7 @@ public class SummarySheet {
     private ObservableList<CookingTask> _cookingTasks;
 
     public SummarySheet() {
-        this._cookingTasks = FXCollections.observableArrayList();
+        this._cookingTasks = FXCollections.observableArrayList(CookingTask.loadAllCookingTasks());
     }
 
     public void addCookingTask(ObservableList<Shift> shift,
@@ -27,9 +27,11 @@ public class SummarySheet {
         CookingTask ct = new CookingTask();
         ct.createCookingTask(shift, recipe, estimatedTime, preparationQuantity, numberOfPortions, priority, difficulty);
         _cookingTasks.add(ct);
+        ct.insertCookingTask(ct);
     }
 
     public void deleteCookingTask(CookingTask cookingTask) {
+        cookingTask.deleteCookingTask(cookingTask);
         _cookingTasks.remove(cookingTask);
     }
 
@@ -49,6 +51,7 @@ public class SummarySheet {
         cookingTask.set_priority(priority);
         cookingTask.set_difficulty(difficulty);
 
+        cookingTask.editCookingTask(cookingTask);
     }
 
     public void sortSummarySheet(String criteria) throws UseCaseLogicException {
@@ -63,21 +66,22 @@ public class SummarySheet {
 
     public void markCookingTaskAsDone(CookingTask cookingTask) {
         cookingTask.setCookingTaskDone();
+        //cookingTask.markCookingTaskAsDone(cookingTask);
         deleteCookingTask(cookingTask);
+    }
+
+    public ObservableList<CookingTask> get_cookingTasks() {
+        return _cookingTasks;
+    }
+
+    public void set_cookingTasks(ObservableList<CookingTask> _cookingTasks) {
+        this._cookingTasks = _cookingTasks;
     }
 
     public ObservableList<CookingTask> getSummarySheet() {
         return this._cookingTasks;
     }
 
-    @Override
-    public String toString() {
-        String s = "";
-        for (CookingTask ct : _cookingTasks) {
-            s += "\n";
-            s += ct.toString();
-        }
-        return s;
-    }
+
 
 }
